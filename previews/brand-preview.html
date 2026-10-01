@@ -184,6 +184,22 @@
   </table>
   <p class="note">The live site currently uses Hanken Grotesk 800 in a stacked lockup. The guidelines say Inter 600/700 and advise against 800/900. Option G shows the current font for comparison.</p>
 
+  <!-- ============ ORANGE DOT ============ -->
+  <h2>2b. Orange dot exploration</h2>
+  <p class="lead">Option E in more forms. The dot links the wordmark to the orange in the mark and splits the name from the domain without needing a second colour for ".com.pk".</p>
+
+  <div class="grid" id="dot-grid"></div>
+
+  <h3 style="margin-top:32px">Size test: E3 (enlarged round dot)</h3>
+  <div class="frame"><div id="dot-sizes" style="padding:24px;display:grid;gap:20px"></div></div>
+  <p class="note">A normal text full stop in Inter Bold is only about 3px wide at 16px, so the orange barely shows. E3/E4 draw the dot about 25% larger so it still reads as orange at mobile sizes.</p>
+
+  <h3 style="margin-top:32px">In the header</h3>
+  <div id="dot-headers"></div>
+
+  <h3 style="margin-top:32px">Other places</h3>
+  <div class="grid" id="dot-contexts"></div>
+
   <!-- ============ ASSETS ============ -->
   <h2>3. Logo asset set</h2>
   <p class="lead">All generated from the master by <code>tools/gen-assets.js</code>.</p>
@@ -247,6 +263,76 @@
       <div class="stage d">${lockup(o, o.dark, 'resale-logo-mono-white.svg', 24)}</div>
       <div class="meta"><b>${o.k} · ${o.name} <span class="tag ${o.tag[0]}">${o.tag[1]}</span></b><div class="swatches">${colours(o.light)}</div></div>
     </div>`).join('');
+
+  // ---------- Orange dot exploration ----------
+  // dot: 'text' = real full stop, 'round' / 'square' = drawn dot (real "." kept for copy & screen readers)
+  const D = [
+    { k: 'E1', name: 'Text dot, Orange 600', dot: 'text', dc: T.orange, name1: T.teal, dom: T.slate, dDom: T.s400 },
+    { k: 'E2', name: 'Text dot, Orange 700 (deeper logo orange)', dot: 'text', dc: '#E55106', name1: T.teal, dom: T.slate, dDom: T.s400 },
+    { k: 'E3', name: 'Enlarged round dot', dot: 'round', dc: T.orange, name1: T.teal, dom: T.slate, dDom: T.s400, tag: ['rec', 'Recommended dot'] },
+    { k: 'E4', name: 'Rounded-square dot (echoes ribbon corners)', dot: 'square', dc: T.orange, name1: T.teal, dom: T.slate, dDom: T.s400 },
+    { k: 'E5', name: 'All teal + orange dot', dot: 'round', dc: T.orange, name1: T.teal, dom: T.teal, dDom: '#CCDCDD' },
+    { k: 'E6', name: 'Ink name + orange dot', dot: 'round', dc: T.orange, name1: T.ink, dom: T.slate, dDom: T.s400 },
+    { k: 'E7', name: 'Every dot orange', dot: 'round', dc: T.orange, name1: T.teal, dom: T.slate, dDom: T.s400, allDots: true },
+    { k: 'E8', name: 'E3 with lighter domain (500)', dot: 'round', dc: T.orange, name1: T.teal, dom: T.slate, dDom: T.s400, domW: 500 },
+  ];
+  const dotEl = (v, c) => v.dot === 'text'
+    ? `<span style="color:${c}">.</span>`
+    : `<span aria-hidden="true" style="display:inline-block;width:.21em;height:.21em;margin:0 .045em 0 .05em;background:${c};border-radius:${v.dot === 'round' ? '50%' : '.05em'}"></span><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">.</span>`;
+  const dotWord = (v, size, dark) => {
+    const n = dark ? T.white : v.name1, d = dark ? v.dDom : v.dom, w = v.domW ? `font-weight:${v.domW};` : '';
+    const dom = v.allDots
+      ? `<span style="color:${d};${w}">com</span>${dotEl(v, v.dc)}<span style="color:${d};${w}">pk</span>`
+      : `<span style="color:${d};${w}">com.pk</span>`;
+    return `<span class="wm" style="font-size:${size}px;position:relative"><span style="color:${n}">resale</span>${dotEl(v, v.dc)}${dom}</span>`;
+  };
+  const dotLockup = (v, size, mark, dark) =>
+    `<span class="brand"><img src="../logo/${mark}" width="${Math.round(size * 1.6)}" height="${Math.round(size * 1.6)}" alt="">${dotWord(v, size, dark)}</span>`;
+
+  document.getElementById('dot-grid').innerHTML = D.map(v => `
+    <div class="card">
+      <div class="stage">${dotLockup(v, 24, 'resale-logo-master.svg')}${dotLockup(v, 17, 'resale-logo-flat.svg')}</div>
+      <div class="stage d">${dotLockup(v, 24, 'resale-logo-mono-white.svg', true)}</div>
+      <div class="meta"><b>${v.k} · ${v.name} ${v.tag ? `<span class="tag ${v.tag[0]}">${v.tag[1]}</span>` : ''}</b>
+      <div class="swatches"><span class="sw"><i style="background:${v.name1}"></i>${v.name1}</span><span class="sw"><i style="background:${v.dc}"></i>${v.dc}</span><span class="sw"><i style="background:${v.dom}"></i>${v.dom}</span></div></div>
+    </div>`).join('');
+
+  const E1 = D[0], E3 = D[2];
+  document.getElementById('dot-sizes').innerHTML = [48, 32, 22, 17, 14].map(s => `
+    <div style="display:flex;gap:40px;align-items:center;flex-wrap:wrap">
+      <span class="note" style="width:44px">${s}px</span>
+      ${dotLockup(E3, s, s * 1.6 > 32 ? 'resale-logo-master.svg' : 'resale-logo-flat.svg')}
+      <span class="note">vs E1:</span>${dotWord(E1, s)}
+    </div>`).join('');
+
+  const hdr = (v, dark) => `
+    <div class="frame${dark ? ' dark' : ''}">
+      <div class="frame-label"><span>Desktop · ${dark ? 'dark' : 'light'} · ${v.k}</span></div>
+      <header class="hdr">
+        <a class="brand" href="#">${dark ? '<img src="../logo/resale-logo-mono-white.svg" width="36" height="36" alt="">' : '<img src="../logo/resale-logo-master.svg" width="36" height="36" alt="">'}${dotWord(v, 22, dark)}</a>
+        <div class="search">⌕ Search models: Latitude 7420, ThinkPad…</div>
+        <nav><a class="active" href="#">Laptops</a><a href="#">Mobiles</a><a href="#">Components</a><a href="#">Desktops</a><a href="#">Servers</a><a href="#">Tools</a></nav>
+        <div class="actions"><span class="btn ghost">Cities</span><span class="icon-btn">${dark ? '☾' : '☼'}</span><span class="btn primary"${dark ? ' style="background:var(--teal-600)"' : ''}>For shops</span></div>
+      </header>
+      <div class="hero"><small>Verified physical shops in Karachi, Lahore and Islamabad.</small><h4>Every shop's price for one model, on a single screen.</h4></div>
+    </div>`;
+  const phone = (v, dark) => `
+    <div class="phone${dark ? ' dark-p' : ''}"><div class="bar"></div>
+      <header class="hdr"><a class="brand" href="#"><img src="../logo/${dark ? 'resale-logo-mono-white.svg' : 'resale-logo-flat.svg'}" width="28" height="28" alt="">${dotWord(v, 19, dark)}</a>
+      <div class="actions"><span class="icon-btn">⌕</span><span class="icon-btn">☰</span></div></header>
+      <div class="body note">${v.k} at 19px</div></div>`;
+  document.getElementById('dot-headers').innerHTML = hdr(E3) + hdr(E3, true) +
+    `<div class="phones" style="margin-top:16px">${phone(E3)}${phone(E3, true)}${phone(D[3])}</div>`;
+
+  const ctx = (title, html, bg = '#fff') => `<div class="card"><div class="stage" style="background:${bg};min-height:140px;justify-content:center">${html}</div><div class="meta"><b>${title}</b></div></div>`;
+  document.getElementById('dot-contexts').innerHTML = [
+    ctx('Footer', `<div style="display:grid;gap:8px">${dotLockup(E3, 18, 'resale-logo-flat.svg')}<span class="note">© 2026 · Verified tech shops across Pakistan</span></div>`, '#F1F5F9'),
+    ctx('On teal (brand panel)', `<span class="brand"><span class="chip"><img src="../logo/resale-logo-master.svg" width="34" height="34" alt=""></span>${dotWord({ ...E3, dDom: '#CCDCDD' }, 24, true)}</span>`, T.teal),
+    ctx('Wordmark only (no symbol), e.g. invoices', dotWord(E3, 30)),
+    ctx('Social / shop window sticker', `<div style="display:grid;place-items:center;gap:12px;width:100%"><img src="../logo/resale-logo-master.svg" width="72" height="72" alt="">${dotWord(E3, 26)}</div>`),
+    ctx('Single colour print (dot must go ink too)', `<span class="brand"><img src="../logo/resale-logo-mono-ink.svg" width="38" height="38" alt="">${dotWord({ ...E3, name1: T.ink, dom: T.ink, dc: T.ink }, 24)}</span>`),
+    ctx('Browser tab title', `<span class="tab" style="border:1px solid var(--slate-200)"><img src="../logo/favicon/favicon.svg" alt="">resale.com.pk: Compare verified tech shops</span>`, '#DEE1E6'),
+  ].join('');
 </script>
 </body>
 </html>
