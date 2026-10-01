@@ -252,6 +252,21 @@
   <h3 style="margin-top:32px">One system, everywhere: R1</h3>
   <div id="sys-r"></div>
 
+  <!-- ============ COMBINATIONS ============ -->
+  <h2>2g. Combinations: price tag + hexagon cap</h2>
+  <p class="lead">P2's tag with R1's hexagon cap as the punched hole. On a teal tag the cap's teal half turns white so both halves stay visible. P1 (hang tag with string) is the playful partner for stickers and campaigns.</p>
+
+  <h3>Side by side at header size</h3>
+  <div class="frame"><div id="cmp-strip" style="padding:24px;display:grid;gap:22px"></div></div>
+
+  <div class="grid" id="combo-grid"></div>
+
+  <h3 style="margin-top:32px">Size test: C1 and C2</h3>
+  <div class="frame"><div id="combo-sizes" style="padding:24px;display:grid;gap:22px"></div></div>
+
+  <h3 style="margin-top:32px">The pairing in use: C1 on the site, C2 for stickers and campaigns</h3>
+  <div id="sys-c"></div>
+
   <!-- ============ ASSETS ============ -->
   <h2>3. Logo asset set</h2>
   <p class="lead">All generated from the master by <code>tools/gen-assets.js</code>.</p>
@@ -548,10 +563,10 @@
   const wmWrap = (s, f, inner, extra = '') => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:center;${extra}${f}">${inner}</span>`;
   const nameSpan = (d, extra = '') => `<span style="color:${d ? T.white : T.teal};line-height:1;${extra}">resale</span>`;
   // Tag: pointed left end (60° like the hexagon), small chamfers on the right, hexagon "hole" near the point.
-  const priceTag = ({ ds, bg, fg, hole, tilt = 0, outline, string, d }) => {
+  const priceTag = ({ ds, bg, fg, hole, holeHtml, tilt = 0, outline, string, d }) => {
     const h = Math.round(ds * 1.8), p = Math.round(h / 2 * TAN30 * 1.15), ch = Math.max(2, Math.round(h * .12));
     const shape = `polygon(${p}px 0,calc(100% - ${ch}px) 0,100% ${ch}px,100% calc(100% - ${ch}px),calc(100% - ${ch}px) 100%,${p}px 100%,0 50%)`;
-    const content = `<span style="display:inline-flex;align-items:center;gap:${Math.round(ds * .45)}px">${hexDot(hole, .5)}<span style="font-weight:600;letter-spacing:.01em">com.pk</span></span>`;
+    const content = `<span style="display:inline-flex;align-items:center;gap:${Math.round(ds * .45)}px">${holeHtml || hexDot(hole, .5)}<span style="font-weight:600;letter-spacing:.01em">com.pk</span></span>`;
     const pad = `0 ${Math.round(ds * .6)}px 0 ${p + Math.round(ds * .15)}px`;
     let tag = `<span style="display:inline-flex;align-items:center;height:${h}px;padding:${pad};background:${bg};color:${fg};font-size:${ds}px;clip-path:${shape}">${content}</span>`;
     if (outline) {
@@ -629,6 +644,50 @@
     `<span class="note">ribbon "/" · ribbon "\\" · hexagon cap · folded ribbon · tall divider</span>`;
   document.getElementById('ribbon-grid').innerHTML = RV.map(v => hexCard(v)).join('');
   document.getElementById('sys-r').innerHTML = system(RV[0]);
+
+  // ---------- Combinations ----------
+  // Cap hole sized to the tag text; on a teal tag the teal half becomes white.
+  const capHole = onTeal => (onTeal ? R.capD() : R.cap()).replace('.46em', '.62em');
+  const tagWord = ({ tilt = 0, string = false, outlined = false, orange = false, below = false }) => (s, d, f) => {
+    const ds = Math.max(11, Math.round(s * (below ? .46 : .52)));
+    const c = d ? '#CCDCDD' : T.teal;
+    const opts = outlined
+      ? { ds, bg: d ? '#111A2B' : '#fff', fg: c, outline: c, holeHtml: capHole(false).replaceAll(T.teal, d ? '#CCDCDD' : T.teal), d }
+      : orange
+        ? { ds, bg: T.orange, fg: T.ink, holeHtml: capHole(false).replaceAll(T.orange, '#fff'), d }
+        : { ds, bg: d ? T.teal6 : T.teal, fg: '#fff', holeHtml: capHole(true), d };
+    const tag = priceTag({ ...opts, tilt, string });
+    return below
+      ? wmWrap(s, f, nameSpan(d) + `<span style="align-self:flex-end;margin:${Math.round(s * .3)}px ${Math.round(s * .05)}px 0 0">${tag}</span>`, 'flex-direction:column;align-items:flex-start;')
+      : wmWrap(s, f, nameSpan(d) + `<span style="margin-left:${Math.round(s * (string ? .55 : .2))}px">${tag}</span>`);
+  };
+  const CV = [
+    { k: 'C1', name: 'Flat tag + hexagon cap hole', tag: ['rec', 'Site / everyday'], note: 'P2 with R1 as the hole. Main lockup for header, app, footer, documents.', word: tagWord({}) },
+    { k: 'C2', name: 'Hang tag + hexagon cap hole', tag: ['rec', 'Stickers / campaigns'], note: 'P1 with R1 as the hole: tilted 6°, tied on a string. For shop windows, social posts, launch banners.', word: tagWord({ tilt: 6, string: true }) },
+    { k: 'C3', name: 'Outlined tag + cap', note: 'Line version of C1 for teal backgrounds, photos and one-colour print. Cap keeps its two colours.', word: tagWord({ outlined: true }) },
+    { k: 'C4', name: 'Swing tag below + cap', note: 'Stacked C2 for narrow and square spaces.', word: tagWord({ tilt: 8, string: true, below: true }) },
+    { k: 'C5', name: 'Orange promo tag + cap', tag: ['warn', 'Sales only'], note: 'For sale events: orange tag, ink text, cap in white and teal.', word: tagWord({ orange: true }) },
+    { k: 'C6', name: 'Cap as plain dot (text-only)', note: 'R1 by itself, for places where a tag is too much: inline text, small print, legal lines. Same family.', word: RV[0].word },
+  ];
+  CV[0].alt = CV[2]; CV[1].alt = CV[2]; CV[3].alt = CV[2]; CV[4].alt = CV[2];
+  document.getElementById('combo-grid').innerHTML = CV.map(tagCard).join('');
+  document.getElementById('cmp-strip').innerHTML = [
+    ['H1', H[0]], ['P2', P[1]], ['R1', RV[0]], ['C1', CV[0]], ['C2', CV[1]],
+  ].map(([k, v]) => `<div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap"><span class="note" style="width:36px;font-weight:600">${k}</span><span style="min-width:300px">${hexLockup(v, 26)}</span><span style="background:var(--dark-surface);padding:12px 16px;border-radius:10px">${hexLockup(v, 22, true)}</span></div>`).join('');
+  document.getElementById('combo-sizes').innerHTML = [40, 30, 24, 20, 16].map(s => `
+    <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap"><span class="note" style="width:44px">${s}px</span>${hexLockup(CV[0], s)}${hexLockup(CV[1], s)}</div>`).join('');
+
+  // Pairing sheet: C1 for product surfaces, C2 where there is room to play.
+  const pairing = () => {
+    const tile = (t, html, bg = '#fff', h = 180) => `<div class="card"><div class="stage" style="background:${bg};min-height:${h}px;align-items:center;justify-content:center">${html}</div><div class="meta"><b>${t}</b></div></div>`;
+    return system(CV[0]) + `<div class="grid" style="margin-top:16px">` +
+      tile('C2 · Shop window sticker', `<span style="padding:22px 26px;border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(15,23,42,.12);display:grid;gap:10px;justify-items:center"><span style="font:600 11px Inter;color:#64748B;letter-spacing:.08em">VERIFIED SHOP ON</span>${hexLockup(CV[1], 22)}</span>`, '#E2E8F0', 220) +
+      tile('C2 · Social post / launch banner', `<span style="width:100%;padding:26px 22px;border-radius:14px;background:linear-gradient(135deg,#F8FAFC,#E6EDEE);display:grid;gap:14px"><span style="font:700 22px/28px Inter;color:#0F172A">Every shop's price<br>for one model.</span>${hexLockup(CV[1], 20)}</span>`, '#fff', 220) +
+      tile('C5 · Sale campaign', `<span style="width:100%;padding:24px 22px;border-radius:14px;background:#0F172A;display:grid;gap:14px"><span style="font:700 20px/26px Inter;color:#fff">Campaign headline</span>${hexLockup(CV[4], 20, true)}</span>`, '#fff', 220) +
+      tile('C6 · Inline text', `<p style="font:400 15px/24px Inter;color:#334155;margin:0;width:100%">Compare prices from verified shops on ${CV[5].word(15, false, '')}, free for buyers.</p>`) +
+      `</div>`;
+  };
+  document.getElementById('sys-c').innerHTML = pairing();
 </script>
 </body>
 </html>
