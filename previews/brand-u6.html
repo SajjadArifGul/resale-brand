@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>resale.com.pk brand identity</title>
+<meta name="description" content="The resale.com.pk logo lockup (U6 folded underline) across web, app, social, print and email.">
+<link rel="icon" href="../logo/favicon/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --teal-900: #013E43; --teal-800: #024E53; --teal-600: #027B7F; --teal-soft: #E6EDEE; --teal-soft-2: #CCDCDD;
+    --orange-700: #E55106; --orange-600: #FD7009; --orange-500: #FE8D14; --orange-soft: #FFF1E6;
+    --ink-950: #0F172A; --ink-800: #1E293B; --slate-700: #334155; --slate-500: #64748B; --slate-400: #94A3B8;
+    --slate-300: #CBD5E1; --slate-200: #E2E8F0; --slate-100: #F1F5F9; --slate-50: #F8FAFC;
+    --dark-page: #0B1220; --dark-surface: #111A2B; --dark-border: #23314A;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--slate-50); color: var(--ink-950); -webkit-font-smoothing: antialiased; }
+  main { max-width: 1200px; margin: 0 auto; padding: 0 16px 96px; }
+  h2 { font-size: 28px; line-height: 36px; margin: 72px 0 6px; letter-spacing: -.01em; }
+  h3 { font-size: 16px; line-height: 24px; margin: 32px 0 12px; font-weight: 600; }
+  p.lead { color: var(--slate-500); margin: 0 0 20px; max-width: 760px; line-height: 24px; }
+  .note { font-size: 13px; color: var(--slate-500); line-height: 20px; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--teal-600); }
+  code { font: 500 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* ===== The U6 wordmark =====
+     Name in Inter 700. Domain at 70% of the name size. Orange underline under "com.pk":
+     thickness 0.14em of the domain, gap 0.14em, ends cut at 30° from vertical (offset = t·tan30).
+     Right end folds under in Orange 700. All sizes are in em, so the lockup scales as one piece. */
+  .wm { font-weight: 700; letter-spacing: -.02em; line-height: 1; white-space: nowrap; display: inline-flex; align-items: baseline; }
+  .wm .n { color: var(--wm-name, var(--teal-800)); }
+  .wm .d { font-size: .7em; color: var(--wm-dom, var(--slate-500)); }
+  .wm .u { position: relative; display: inline-block; }
+  .wm .u::before { content: ""; position: absolute; left: 0; right: 0; bottom: -.28em; height: max(2px, .14em);
+    background: var(--wm-line, var(--orange-600));
+    clip-path: polygon(.081em 0, 100% 0, calc(100% - .081em) 100%, 0 100%); }
+  .wm .u::after { content: ""; position: absolute; right: -.02em; bottom: -.504em; width: .308em; height: .364em;
+    background: var(--wm-fold, var(--orange-700)); clip-path: polygon(0 0, 100% 0, 100% 62%, 0 100%); }
+  .t-dark { --wm-name: #FFFFFF; --wm-dom: var(--slate-400); }
+  .t-teal { --wm-name: #FFFFFF; --wm-dom: var(--teal-soft-2); }
+  .t-ink { --wm-name: var(--ink-950); --wm-dom: var(--ink-950); --wm-line: var(--ink-950); --wm-fold: var(--ink-950); }
+  .t-white { --wm-name: #FFFFFF; --wm-dom: #FFFFFF; --wm-line: #FFFFFF; --wm-fold: #FFFFFF; }
+
+  .lockup { display: inline-flex; align-items: center; gap: .42em; text-decoration: none; }
+  .lockup img { width: 1.55em; height: 1.55em; display: block; flex: none; }
+  .lockup.v { flex-direction: column; gap: .5em; }
+  .lockup.v img { width: 2.6em; height: 2.6em; }
+
+  /* ===== Page chrome ===== */
+  .hero { background: #fff; border-bottom: 1px solid var(--slate-200); }
+  .hero-in { max-width: 1200px; margin: 0 auto; padding: 56px 16px 48px; display: grid; gap: 28px; }
+  .hero h1 { font-size: 40px; line-height: 48px; margin: 0; letter-spacing: -.02em; }
+  .hero .row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .pill-link { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border-radius: 999px; background: var(--slate-100); color: var(--slate-700); font-size: 13px; font-weight: 600; text-decoration: none; }
+  .toc { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toc a { font-size: 13px; color: var(--teal-800); text-decoration: none; padding: 6px 10px; border: 1px solid var(--slate-200); border-radius: 999px; background: #fff; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid.g2 { grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); }
+  @media (max-width: 600px) { .grid, .grid.g2 { grid-template-columns: 1fr; } }
+  .card { background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+  .card .stage { padding: 32px 24px; display: flex; align-items: center; justify-content: center; min-height: 180px; flex: 1; }
+  .card .meta { padding: 12px 16px 14px; border-top: 1px solid var(--slate-200); display: grid; gap: 2px; }
+  .card .meta b { font-size: 14px; }
+  .frame { background: #fff; border: 1px solid var(--slate-200); border-radius: 16px; overflow: hidden; margin-top: 16px; }
+  .frame-label { padding: 10px 16px; font-size: 12px; font-weight: 600; color: var(--slate-500); border-bottom: 1px solid var(--slate-200); background: var(--slate-50); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+
+  /* Website */
+  .chrome { background: #DEE1E6; padding: 8px 8px 0; display: flex; gap: 6px; }
+  .tab { display: inline-flex; align-items: center; gap: 8px; background: #fff; border-radius: 8px 8px 0 0; padding: 8px 14px; font-size: 12px; color: #202124; max-width: 300px; white-space: nowrap; overflow: hidden; }
+  .tab.off { background: transparent; color: #5F6368; }
+  .tab img { width: 16px; height: 16px; }
+  .addr { background: #fff; padding: 6px 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--slate-200); }
+  .addr span { flex: 1; background: var(--slate-100); border-radius: 999px; padding: 6px 14px; font-size: 13px; color: var(--slate-700); }
+  .hdr { display: flex; align-items: center; gap: 20px; height: 68px; padding: 0 24px; background: #fff; border-bottom: 1px solid var(--slate-200); font-size: 24px; }
+  .hdr .search { flex: 1; max-width: 320px; height: 40px; border: 1px solid var(--slate-200); border-radius: 10px; display: flex; align-items: center; padding: 0 12px; color: var(--slate-400); font-size: 14px; white-space: nowrap; overflow: hidden; }
+  .hdr nav { display: flex; gap: 20px; font-size: 14px; font-weight: 500; color: var(--slate-700); }
+  .hdr nav a { color: inherit; text-decoration: none; padding: 23px 0; border-bottom: 2px solid transparent; }
+  .hdr nav a.on { color: var(--teal-800); border-bottom-color: var(--orange-600); }
+  .hdr .act { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .btn { height: 40px; padding: 0 16px; border-radius: 10px; font: 600 14px Inter, sans-serif; display: inline-flex; align-items: center; border: 1px solid transparent; white-space: nowrap; }
+  .btn.p { background: var(--teal-800); color: #fff; }
+  .btn.g { background: #fff; border-color: var(--slate-200); color: var(--slate-700); }
+  .ib { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--slate-200); display: grid; place-items: center; color: var(--slate-700); font-size: 16px; flex: none; }
+  .page-hero { padding: 44px 24px 52px; background: var(--slate-50); }
+  .page-hero small { color: var(--slate-500); font-size: 13px; }
+  .page-hero .h { font-size: 36px; line-height: 44px; font-weight: 700; margin: 8px 0 18px; max-width: 560px; letter-spacing: -.02em; }
+  .page-hero .sbox { display: flex; gap: 8px; max-width: 520px; background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; padding: 8px; }
+  .page-hero .sbox span:first-child { flex: 1; color: var(--slate-400); font-size: 15px; padding: 10px 8px; }
+  .dk .hdr { background: var(--dark-surface); border-color: var(--dark-border); }
+  .dk .hdr nav { color: #CBD5E1; } .dk .hdr nav a.on { color: #fff; }
+  .dk .search, .dk .ib, .dk .btn.g { border-color: var(--dark-border); background: transparent; color: #94A3B8; }
+  .dk .btn.p { background: var(--teal-600); }
+  .dk .page-hero { background: var(--dark-page); color: #F1F5F9; }
+  .dk .page-hero small { color: #94A3B8; }
+  .dk .page-hero .sbox { background: var(--dark-surface); border-color: var(--dark-border); }
+  .compact .hdr { height: 52px; font-size: 19px; box-shadow: 0 1px 2px rgba(15,23,42,.05), 0 4px 12px rgba(15,23,42,.06); }
+  @media (max-width: 1100px) { .hdr nav a:nth-child(n+4) { display: none; } }
+  @media (max-width: 900px) { .frame .hdr nav, .frame .hdr .search { display: none; } }
+
+  .footer { background: var(--ink-950); color: #CBD5E1; padding: 36px 28px 24px; display: grid; gap: 28px; font-size: 14px; }
+  .footer .cols { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 24px; }
+  .footer .cols div { display: grid; gap: 8px; align-content: start; }
+  .footer .cols b { color: #fff; font-size: 13px; }
+  .footer .legal { border-top: 1px solid #1E293B; padding-top: 16px; font-size: 12px; color: #64748B; }
+  @media (max-width: 700px) { .footer .cols { grid-template-columns: 1fr 1fr; } }
+
+  /* Devices */
+  .devices { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; }
+  .phone { width: 300px; height: 620px; border-radius: 40px; background: #0B0F17; padding: 10px; box-shadow: 0 10px 30px rgba(15,23,42,.18); flex: none; }
+  .screen { width: 100%; height: 100%; border-radius: 31px; overflow: hidden; position: relative; background: #fff; display: flex; flex-direction: column; }
+  .sbar { height: 34px; display: flex; justify-content: space-between; align-items: center; padding: 0 22px; font: 600 12px Inter; color: var(--ink-950); flex: none; }
+  .phone .hdr { height: 54px; padding: 0 14px; gap: 10px; font-size: 20px; }
+  .ph-body { flex: 1; background: var(--slate-50); padding: 16px; display: grid; gap: 12px; align-content: start; }
+  .skel { height: 72px; border-radius: 12px; background: #fff; border: 1px solid var(--slate-200); }
+  .ph-dark .screen { background: var(--dark-surface); } .ph-dark .sbar { color: #fff; }
+  .ph-dark .hdr { background: var(--dark-surface); border-color: var(--dark-border); } .ph-dark .ib { border-color: var(--dark-border); color: #94A3B8; }
+  .ph-dark .ph-body { background: var(--dark-page); } .ph-dark .skel { background: var(--dark-surface); border-color: var(--dark-border); }
+  .homescreen { background: linear-gradient(160deg, #1D4E5A, #0F172A 70%); }
+  .apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 10px; padding: 26px 16px; }
+  .app { display: grid; justify-items: center; gap: 6px; font: 500 10.5px Inter; color: #fff; }
+  .app i { width: 54px; height: 54px; border-radius: 13px; background: rgba(255,255,255,.18); display: block; }
+  .app img { width: 54px; height: 54px; border-radius: 13px; display: block; }
+  .notif { margin: 4px 10px; background: rgba(255,255,255,.88); border-radius: 18px; padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start; font-size: 12px; line-height: 16px; color: var(--ink-950); }
+  .notif img { width: 30px; height: 30px; border-radius: 8px; }
+
+  /* Social */
+  .post { width: 100%; aspect-ratio: 1; border-radius: 12px; overflow: hidden; position: relative; }
+  .story { width: 240px; aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; position: relative; flex: none; }
+  .cover { width: 100%; aspect-ratio: 3 / 1; border-radius: 12px; overflow: hidden; position: relative; }
+
+  /* Print */
+  .bcard { width: 336px; height: 192px; border-radius: 10px; box-shadow: 0 6px 18px rgba(15,23,42,.14); position: relative; overflow: hidden; flex: none; }
+  .sticker { width: 230px; height: 230px; border-radius: 50%; background: #fff; box-shadow: 0 6px 18px rgba(15,23,42,.18), inset 0 0 0 8px var(--teal-800); display: grid; place-items: center; text-align: center; }
+  .sign { width: 100%; max-width: 560px; height: 130px; border-radius: 6px; background: linear-gradient(180deg, #024E53, #013E43); box-shadow: 0 10px 24px rgba(15,23,42,.25), inset 0 0 0 3px rgba(255,255,255,.06); display: flex; align-items: center; justify-content: center; }
+
+  .swatch { border-radius: 12px; overflow: hidden; border: 1px solid var(--slate-200); background: #fff; }
+  .swatch i { display: block; height: 88px; }
+  .swatch div { padding: 10px 12px; font-size: 13px; display: grid; gap: 2px; }
+
+  .dont .stage { position: relative; }
+  .dont .stage::after { content: "✕"; position: absolute; top: 10px; right: 12px; width: 24px; height: 24px; border-radius: 50%; background: #FEF2F2; color: #B91C1C; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+  .do .stage::after { content: "✓"; position: absolute; top: 10px; right: 12px; width: 24px; height: 24px; border-radius: 50%; background: #F0FDF4; color: #15803D; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+  .do .stage { position: relative; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 14px; background: #fff; }
+  td, th { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--slate-200); vertical-align: top; }
+  th { font-size: 12px; color: var(--slate-500); font-weight: 600; background: var(--slate-50); }
+  .scroll-x { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-in">
+    <span class="eyebrow">Brand identity · v1 · selected lockup U6</span>
+    <span id="hero-lockup" style="font-size:56px"></span>
+    <h1>resale.com.pk logo in use</h1>
+    <p class="lead" style="margin:0">The symbol with the folded-underline wordmark: "resale" leads, ".com.pk" stays visible because the full address is what people type, and one orange stroke with a ribbon fold ties the name to the symbol.</p>
+    <nav class="toc">
+      <a href="#lockups">Lockups</a><a href="#spec">Construction</a><a href="#colour">Colour</a><a href="#size">Sizes</a><a href="#bg">Backgrounds</a>
+      <a href="#web">Website</a><a href="#app">Mobile app</a><a href="#social">Social</a><a href="#print">Print &amp; shop</a><a href="#email">Email</a><a href="#partner">Partner badges</a><a href="#misuse">Do &amp; don't</a>
+      <a href="brand-preview.html" style="color:var(--slate-500)">← All explorations</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ================= LOCKUPS ================= -->
+  <section id="lockups">
+    <h2>Lockups</h2>
+    <p class="lead">Four arrangements. Horizontal is the default; use the others only when space demands it.</p>
+    <div class="grid" id="lockup-grid"></div>
+  </section>
+
+  <!-- ================= CONSTRUCTION ================= -->
+  <section id="spec">
+    <h2>Construction</h2>
+    <p class="lead">Everything is proportional to the name size (N), so the lockup scales as one piece.</p>
+    <div class="frame" style="overflow-x:auto">
+      <div style="display:flex;justify-content:center;min-width:max-content"><div id="spec-box" style="position:relative;padding:64px 32px 80px;font-size:72px"></div></div>
+    </div>
+    <div class="scroll-x" style="margin-top:16px">
+      <table>
+        <tr><th>Element</th><th>Rule</th></tr>
+        <tr><td>Name "resale"</td><td>Inter 700, letter-spacing −2%, Teal 800 <code>#024E53</code>. Size = N.</td></tr>
+        <tr><td>Domain ".com.pk"</td><td>Inter 700 at 0.7 N, Slate 500 <code>#64748B</code>, sharing the name's baseline. The full stop is a normal full stop in the domain colour.</td></tr>
+        <tr><td>Underline</td><td>Under "com.pk" only. Thickness 0.14 × domain size (≈ 0.1 N), never below 2px. Gap below baseline equal to its thickness. Both ends cut at 30° from vertical, matching the symbol's hexagon. Orange 600 <code>#FD7009</code>.</td></tr>
+        <tr><td>Fold</td><td>At the right end, a small tab folds down beneath the stroke in Orange 700 <code>#E55106</code>, echoing the symbol's ribbon folds. Width 2.2 × stroke, depth 2.6 × stroke.</td></tr>
+        <tr><td>Symbol</td><td>Height 1.55 N, vertically centred on the name. Gap between symbol and name 0.42 N.</td></tr>
+        <tr><td>Clear space</td><td>At least the symbol's height × 0.25 on every side (guidelines §10: 12.5% of the logo width, rounded up for the wider lockup).</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= COLOUR ================= -->
+  <section id="colour">
+    <h2>Colour</h2>
+    <p class="lead">Five colours, all from the existing palette. Orange appears only in the symbol and the stroke.</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+      <div class="swatch"><i style="background:#024E53"></i><div><b>Teal 800</b><code>#024E53</code><span class="note">Name, symbol</span></div></div>
+      <div class="swatch"><i style="background:#64748B"></i><div><b>Slate 500</b><code>#64748B</code><span class="note">Domain on light</span></div></div>
+      <div class="swatch"><i style="background:#FD7009"></i><div><b>Orange 600</b><code>#FD7009</code><span class="note">Underline</span></div></div>
+      <div class="swatch"><i style="background:#E55106"></i><div><b>Orange 700</b><code>#E55106</code><span class="note">Fold</span></div></div>
+      <div class="swatch"><i style="background:#94A3B8"></i><div><b>Slate 400</b><code>#94A3B8</code><span class="note">Domain on dark</span></div></div>
+    </div>
+  </section>
+
+  <!-- ================= SIZES ================= -->
+  <section id="size">
+    <h2>Sizes</h2>
+    <p class="lead">Name size N shown on the left. The full-gradient symbol is used above 32px; the flat two-colour symbol at 32px and below (guidelines §10).</p>
+    <div class="frame"><div id="size-ramp" style="padding:28px 24px;display:grid;gap:26px"></div></div>
+    <div class="scroll-x" style="margin-top:16px">
+      <table>
+        <tr><th>Use</th><th>Name size N</th><th>Symbol</th></tr>
+        <tr><td>Desktop header</td><td>22–24px</td><td>34–37px, full gradient</td></tr>
+        <tr><td>Desktop header, scrolled</td><td>18–19px</td><td>28–30px, flat</td></tr>
+        <tr><td>Mobile header</td><td>18–20px</td><td>28–31px, flat</td></tr>
+        <tr><td>Footer, documents</td><td>18–22px</td><td>flat or full</td></tr>
+        <tr><td><b>Minimum</b></td><td><b>16px</b> (domain ≈ 11px)</td><td>Below this, use the symbol alone</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= BACKGROUNDS ================= -->
+  <section id="bg">
+    <h2>Backgrounds</h2>
+    <p class="lead">Full colour on white and light neutrals. On dark: white name and white symbol, orange stroke kept. On teal: same, with Teal Soft 2 for the domain. For one-colour printing, everything goes ink or white.</p>
+    <div class="grid" id="bg-grid"></div>
+  </section>
+
+  <!-- ================= WEBSITE ================= -->
+  <section id="web">
+    <h2>Website</h2>
+    <p class="lead">resale.com.pk header, scrolled header, dark mode, footer, browser tab and link preview.</p>
+    <div id="web-frames"></div>
+  </section>
+
+  <!-- ================= APP ================= -->
+  <section id="app">
+    <h2>Mobile app &amp; mobile web</h2>
+    <p class="lead">Home-screen icon, splash, app bar in light and dark, and a push notification. The app icon is the symbol alone, never the wordmark.</p>
+    <div class="devices" id="devices"></div>
+  </section>
+
+  <!-- ================= SOCIAL ================= -->
+  <section id="social">
+    <h2>Social media</h2>
+    <p class="lead">Profile avatars use the symbol only (circle crops cut off text). Covers, posts and stories carry the full lockup.</p>
+    <div id="social-wrap"></div>
+  </section>
+
+  <!-- ================= PRINT ================= -->
+  <section id="print">
+    <h2>Print &amp; shop</h2>
+    <p class="lead">Business card, invoice header, verified-shop window sticker and storefront sign.</p>
+    <div id="print-wrap"></div>
+  </section>
+
+  <!-- ================= EMAIL ================= -->
+  <section id="email">
+    <h2>Email</h2>
+    <div class="grid g2" id="email-wrap"></div>
+  </section>
+
+  <!-- ================= PARTNER ================= -->
+  <section id="partner">
+    <h2>Partner badges</h2>
+    <p class="lead">For verified shops to put on their own websites, Facebook pages and receipts. Links back to their resale.com.pk profile.</p>
+    <div class="grid" id="partner-wrap"></div>
+  </section>
+
+  <!-- ================= MISUSE ================= -->
+  <section id="misuse">
+    <h2>Do &amp; don't</h2>
+    <div class="grid" id="misuse-grid"></div>
+  </section>
+</main>
+
+<script>
+  const MARK = { full: '../logo/resale-logo-master.svg', flat: '../logo/resale-logo-flat.svg', white: '../logo/resale-logo-mono-white.svg', ink: '../logo/resale-logo-mono-ink.svg' };
+
+  // Wordmark and lockups. `n` = name size in px; theme: '' | 't-dark' | 't-teal' | 't-ink' | 't-white'
+  const wm = (theme = '') => `<span class="wm ${theme}" aria-label="resale.com.pk"><span class="n">resale</span><span class="d">.<span class="u">com.pk</span></span></span>`;
+  const markFor = (theme, symbolPx) => theme === 't-dark' || theme === 't-teal' || theme === 't-white' ? MARK.white : theme === 't-ink' ? MARK.ink : symbolPx > 32 ? MARK.full : MARK.flat;
+  const lockup = (n, theme = '', layout = 'h') => {
+    if (layout === 'wm') return `<span style="font-size:${n}px">${wm(theme)}</span>`;
+    if (layout === 'sym') return `<img src="${markFor(theme, n * 2.6)}" width="${n * 2.6}" height="${n * 2.6}" alt="resale.com.pk">`;
+    const sym = layout === 'v' ? n * 2.6 : n * 1.55;
+    return `<span class="lockup ${layout === 'v' ? 'v' : ''} ${theme}" style="font-size:${n}px"><img src="${markFor(theme, sym)}" alt="">${wm(theme)}</span>`;
+  };
+  const card = (title, note, html, bg = '#fff', extra = '') => `<div class="card ${extra}"><div class="stage" style="background:${bg}">${html}</div><div class="meta"><b>${title}</b>${note ? `<span class="note">${note}</span>` : ''}</div></div>`;
+  const $ = id => document.getElementById(id);
+
+  $('hero-lockup').innerHTML = lockup(56);
+
+  // ---- Lockups
+  $('lockup-grid').innerHTML = [
+    card('Horizontal (primary)', 'Headers, documents, most placements.', lockup(30)),
+    card('Horizontal on dark', 'White symbol and name; orange stroke kept.', lockup(30, 't-dark'), 'var(--dark-surface)'),
+    card('Stacked', 'Square spaces: splash screens, stickers, posts.', lockup(26, '', 'v')),
+    card('Stacked on teal', '', lockup(26, 't-teal', 'v'), 'var(--teal-800)'),
+    card('Wordmark only', 'When the symbol already appears nearby.', lockup(34, '', 'wm')),
+    card('Symbol only', 'App icon, favicon, avatars, small sizes.', lockup(36, '', 'sym')),
+  ].join('');
+
+  // ---- Construction diagram: draw the real lockup at N = 72, then measure it to place the guides.
+  (() => {
+    const box = $('spec-box');
+    box.innerHTML = lockup(72);
+    const draw = () => {
+      box.querySelectorAll('.guide').forEach(e => e.remove());
+      const r = box.getBoundingClientRect();
+      const rel = el => { const q = el.getBoundingClientRect(); return { l: q.left - r.left, t: q.top - r.top, b: q.bottom - r.top, rr: q.right - r.left }; };
+      const name = rel(box.querySelector('.n')), dom = rel(box.querySelector('.d')), u = rel(box.querySelector('.u')), img = rel(box.querySelector('img'));
+      // An empty inline-block sits exactly on the text baseline.
+      const probe = document.createElement('span');
+      probe.style.cssText = 'display:inline-block;width:0;height:0';
+      box.querySelector('.n').appendChild(probe);
+      const base = probe.getBoundingClientRect().top - r.top;
+      probe.remove();
+      const g = (style, html = '') => `<span class="guide" style="position:absolute;${style}">${html}</span>`;
+      const label = (x, y, t, c) => g(`left:${x}px;top:${y}px;font:600 12px Inter;color:${c};white-space:nowrap`, t);
+      const bracket = (x1, x2, y, c) => g(`left:${x1}px;width:${x2 - x1}px;top:${y}px;height:6px;border:1.5px solid ${c};border-bottom:0`);
+      box.insertAdjacentHTML('beforeend',
+        g(`left:0;right:0;top:${base}px;border-top:1px dashed #CBD5E1`) + g(`right:-60px;top:${base - 8}px;font:600 12px Inter;color:#94A3B8`, 'baseline') +
+        bracket(name.l, name.rr, name.t - 10, '#024E53') + label(name.l, name.t - 30, 'N · name size', '#024E53') +
+        bracket(dom.l, dom.rr, name.t - 10, '#64748B') + label(dom.l, name.t - 30, '0.7 N', '#64748B') +
+        bracket(img.l, img.rr, img.b + 10, '#024E53') + label(img.l, img.b + 20, 'symbol 1.55 N', '#024E53') +
+        g(`left:${u.rr}px;top:${base + 40}px;transform:translateX(-100%);font:600 12px Inter;color:#FD7009;white-space:nowrap`, 'stroke ≈ 0.1 N · ends cut 30° from vertical') +
+        g(`left:${u.rr}px;top:${base + 58}px;transform:translateX(-100%);font:600 12px Inter;color:#E55106;white-space:nowrap`, 'fold · Orange 700 ↑'));
+    };
+    document.fonts.ready.then(draw);
+    window.addEventListener('load', draw);
+  })();
+
+  // ---- Size ramp
+  $('size-ramp').innerHTML = [48, 36, 24, 20, 18, 16].map(n => `<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap"><span class="note" style="width:52px">N ${n}px</span>${lockup(n)}<span class="note">${n * 1.55 > 32 ? 'full symbol' : 'flat symbol'} · domain ${Math.round(n * .7)}px</span></div>`).join('') +
+    `<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap"><span class="note" style="width:52px">&lt; 16px</span><img src="${MARK.flat}" width="24" height="24" alt=""><span class="note">symbol only</span></div>`;
+
+  // ---- Backgrounds
+  $('bg-grid').innerHTML = [
+    card('White', 'Default.', lockup(26)),
+    card('Slate 50 / page', '', lockup(26), 'var(--slate-50)'),
+    card('Teal Soft', '', lockup(26), 'var(--teal-soft)'),
+    card('Ink / dark mode', '', lockup(26, 't-dark'), 'var(--dark-surface)'),
+    card('Teal 800', '', lockup(26, 't-teal'), 'var(--teal-800)'),
+    card('Photo (with dark scrim)', '', lockup(26, 't-dark'), 'linear-gradient(0deg,rgba(15,23,42,.65),rgba(15,23,42,.35)),linear-gradient(135deg,#7C8A99,#2B3646 60%,#5B4A3A)'),
+    card('One colour: ink', 'Stamps, receipts, fax, engraving.', lockup(26, 't-ink')),
+    card('One colour: white', 'Reversed print, embroidery, etching.', lockup(26, 't-white'), 'var(--ink-950)'),
+  ].join('');
+
+  // ---- Website
+  (() => {
+    const nav = `<nav><a class="on" href="#">Laptops</a><a href="#">Mobiles</a><a href="#">Components</a><a href="#">Desktops</a><a href="#">Servers</a><a href="#">Tools</a></nav>`;
+    const header = (theme, n = 24) => `<header class="hdr"><a class="lockup ${theme}" style="font-size:${n}px" href="#"><img src="${markFor(theme, n * 1.55)}" alt="">${wm(theme)}</a><div class="search">⌕ Search models: Latitude 7420, ThinkPad T14…</div>${nav}<div class="act"><span class="btn g">Cities</span><span class="ib">${theme ? '☾' : '☼'}</span><span class="btn p">For shops</span></div></header>`;
+    const heroBlock = `<div class="page-hero"><small>Verified physical shops in Karachi, Lahore and Islamabad.</small><div class="h">Every shop's price for one model, on a single screen.</div><div class="sbox"><span>Latitude 7420, ThinkPad T14, iPhone 13…</span><span class="btn p">Search</span></div></div>`;
+    const tabs = `<div class="chrome"><span class="tab"><img src="../logo/favicon/favicon.svg" alt="">resale.com.pk: Compare verified tech shops</span><span class="tab off">New tab</span></div><div class="addr"><span>🔒 resale.com.pk</span></div>`;
+    const footer = `<footer class="footer"><div class="cols"><div>${lockup(22, 't-dark')}<span style="max-width:280px;line-height:22px;margin-top:6px">Compare verified tech shops across Pakistan.</span></div><div><b>Browse</b><span>Laptops</span><span>Mobiles</span><span>Components</span></div><div><b>Tools</b><span>PTA Tax Calculator</span><span>IMEI Verification</span><span>Fair Price Estimator</span></div><div><b>Company</b><span>For shops</span><span>About</span><span>Contact</span></div></div><div class="legal">© 2026 resale.com.pk</div></footer>`;
+    $('web-frames').innerHTML =
+      `<div class="frame"><div class="frame-label"><span>Desktop · light</span><span>N 24px · full-gradient symbol</span></div>${tabs}${header('')}${heroBlock}</div>` +
+      `<div class="frame dk"><div class="frame-label"><span>Desktop · dark mode</span><span>White symbol · white name · orange stroke</span></div>${header('t-dark')}${heroBlock}</div>` +
+      `<div class="frame compact"><div class="frame-label"><span>Desktop · scrolled (compact sticky header)</span><span>N 19px · flat symbol</span></div>${header('', 19)}<div style="height:90px;background:var(--slate-50)"></div></div>` +
+      `<div class="frame"><div class="frame-label"><span>Footer</span></div>${footer}</div>` +
+      `<h3>Link preview (WhatsApp, Facebook, LinkedIn: 1200×630 Open Graph image)</h3>
+       <div class="grid g2">
+         <div class="card"><div class="stage" style="background:#ECE5DD;justify-content:flex-start;align-items:flex-end;min-height:330px">
+           <div style="width:100%;max-width:360px;margin-left:auto;background:#D9FDD3;border-radius:10px;padding:5px;box-shadow:0 1px 1px rgba(0,0,0,.08)">
+             <div style="background:#fff;border-radius:7px;overflow:hidden">
+               <div style="aspect-ratio:1200/630;background:#fff;display:grid;place-items:center;border-bottom:1px solid #eee;position:relative">
+                 <span style="position:absolute;inset:0;background:linear-gradient(135deg,#F8FAFC 0%,#E6EDEE 100%)"></span>
+                 <span style="position:relative;display:grid;gap:10px;justify-items:center">${lockup(22)}<span style="font:600 11px Inter;color:#334155">Every shop's price for one model</span></span>
+               </div>
+               <div style="padding:8px 10px;font-size:12px;line-height:16px"><b>resale.com.pk: Compare verified tech shops</b><br><span style="color:#64748B">resale.com.pk</span></div>
+             </div>
+             <div style="padding:6px 6px 2px;font-size:13px;color:#111">resale.com.pk/laptops/latitude-7420 <span style="float:right;font-size:10px;color:#667781">10:42</span></div>
+           </div>
+         </div><div class="meta"><b>WhatsApp share</b><span class="note">The OG image uses the lockup centred on Teal Soft.</span></div></div>
+         <div class="card"><div class="stage" style="min-height:330px"><div style="width:100%;max-width:440px;aspect-ratio:1200/630;border-radius:8px;overflow:hidden;position:relative;background:var(--teal-800);display:grid;place-items:center">
+           <span style="display:grid;gap:14px;justify-items:center">${lockup(30, 't-teal')}<span style="font:600 14px Inter;color:#CCDCDD">Every shop's price for one model</span></span></div></div><div class="meta"><b>Open Graph image, teal version</b><span class="note">Alternative for social sharing.</span></div></div>
+       </div>`;
+  })();
+
+  // ---- Devices
+  (() => {
+    const sbar = (c = '') => `<div class="sbar" style="${c}"><span>9:41</span><span>●●● ▮</span></div>`;
+    const appHeader = theme => `<header class="hdr"><span class="lockup ${theme}" style="font-size:19px"><img src="${markFor(theme, 29)}" alt="">${wm(theme)}</span><span class="act"><span class="ib">⌕</span><span class="ib">☰</span></span></header>`;
+    const skel = '<div class="skel"></div>'.repeat(5);
+    $('devices').innerHTML =
+      `<div><div class="phone"><div class="screen homescreen">${sbar('color:#fff')}
+         <div class="apps">${'<span class="app"><i></i>App</span>'.repeat(5)}<span class="app"><img src="../logo/app-icon/ios-app-icon-1024.png" alt="">resale</span>${'<span class="app"><i></i>App</span>'.repeat(10)}</div>
+         <div class="notif" style="margin-top:auto;margin-bottom:24px"><img src="../logo/app-icon/ios-app-icon-1024.png" alt=""><div><b>resale</b><br>Price drop: ThinkPad T14 is now Rs 89,500 at 3 verified shops.</div></div>
+       </div></div><p class="note" style="text-align:center">Home screen &amp; notification (sample text)<br>Label under icon: "resale"</p></div>` +
+      `<div><div class="phone"><div class="screen" style="background:#fff;align-items:center;justify-content:center">${lockup(22, '', 'v')}<span class="note" style="position:absolute;bottom:40px">Verified tech shops</span></div></div><p class="note" style="text-align:center">Splash screen</p></div>` +
+      `<div><div class="phone"><div class="screen">${sbar()}${appHeader('')}<div class="ph-body">${skel}</div></div></div><p class="note" style="text-align:center">App bar · light</p></div>` +
+      `<div><div class="phone ph-dark"><div class="screen">${sbar()}${appHeader('t-dark')}<div class="ph-body">${skel}</div></div></div><p class="note" style="text-align:center">App bar · dark</p></div>`;
+  })();
+
+  // ---- Social
+  (() => {
+    const avatar = (bg, mark, size = 120) => `<span style="width:${size}px;height:${size}px;border-radius:50%;background:${bg};display:grid;place-items:center;box-shadow:0 1px 3px rgba(15,23,42,.18);flex:none"><img src="${mark}" width="${size * .6}" height="${size * .6}" alt=""></span>`;
+    $('social-wrap').innerHTML =
+      `<h3>Profile avatars</h3><div class="frame" style="padding:28px;display:flex;gap:32px;align-items:center;flex-wrap:wrap">
+        ${avatar('#fff', MARK.full)}${avatar('var(--teal-800)', MARK.white)}${avatar('#fff', MARK.full, 64)}${avatar('#fff', MARK.flat, 40)}
+        <span class="note" style="max-width:300px">White background is the default. Teal works for channels with dark UI. Never put the wordmark in an avatar.</span></div>` +
+      `<h3>Cover / banner (Facebook, LinkedIn, X, YouTube: 3:1 safe area)</h3>
+       <div class="cover" style="background:linear-gradient(120deg,#F8FAFC 0%,#E6EDEE 60%,#CCDCDD 100%)">
+         <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 7%;gap:16px">${lockup(34)}<span style="font:600 clamp(14px,2vw,22px)/1.3 Inter;color:#334155;max-width:520px">Every shop's price for one model, on a single screen.</span></div></div>` +
+      `<h3>Post (1:1) and story (9:16)</h3>
+       <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+         <div class="post" style="background:var(--teal-800)"><div style="position:absolute;inset:0;padding:26px;display:flex;flex-direction:column;justify-content:space-between">${lockup(18, 't-teal')}<span style="font:700 26px/32px Inter;color:#fff">Same laptop.<br>Five shops.<br>One screen.</span><span style="font:600 13px Inter;color:#CCDCDD">Compare before you walk in.</span></div></div>
+         <div class="post" style="background:#fff;border:1px solid var(--slate-200)"><div style="position:absolute;inset:0;padding:26px;display:flex;flex-direction:column;justify-content:space-between"><span style="font:600 12px Inter;color:var(--teal-600);letter-spacing:.08em">PRICE CHECK</span><span style="font:700 24px/30px Inter;color:#0F172A">Dell Latitude 7420<br><span style="color:#64748B;font-weight:600;font-size:18px">from Rs 69,458 at 5 shops</span></span>${lockup(18)}</div></div>
+         <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+           <div class="story" style="background:linear-gradient(180deg,#024E53,#013E43)"><div style="position:absolute;inset:0;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center">${lockup(18, 't-teal')}<span style="font:700 26px/32px Inter;color:#fff">Know the price<br>before you<br>walk in.</span><span style="background:#fff;color:#024E53;font:700 13px Inter;padding:10px 16px;border-radius:999px">resale.com.pk</span></div></div>
+         </div>
+       </div>
+       <p class="note">Sample copy and prices are placeholders.</p>`;
+  })();
+
+  // ---- Print
+  (() => {
+    $('print-wrap').innerHTML =
+      `<h3>Business card (85 × 55 mm)</h3><div class="frame" style="padding:32px;display:flex;gap:28px;flex-wrap:wrap;justify-content:center;background:#E2E8F0">
+        <div class="bcard" style="background:#fff;display:grid;place-items:center">${lockup(26)}</div>
+        <div class="bcard" style="background:var(--teal-800);color:#fff;padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between">
+          <div><div style="font:700 16px Inter">Your Name</div><div style="font:500 12px Inter;color:#CCDCDD;margin-top:2px">Partnerships</div></div>
+          <div style="font:500 11.5px/18px Inter;color:#E6EDEE">+92 3XX XXXXXXX<br>name@resale.com.pk</div>
+          <img src="${MARK.white}" alt="" style="position:absolute;right:20px;bottom:20px;width:44px;height:44px">
+        </div></div>` +
+      `<h3>Invoice / receipt header</h3><div class="grid g2">
+        <div class="card"><div class="stage" style="display:block;padding:28px"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:2px solid #0F172A;padding-bottom:16px">${lockup(20)}<div style="text-align:right;font:500 12px/18px Inter;color:#334155"><b style="font-size:16px;color:#0F172A">INVOICE</b><br>No. RS-000123<br>01 Oct 2026</div></div><div style="display:grid;gap:8px;margin-top:16px">${'<div style="height:10px;background:#F1F5F9;border-radius:4px"></div>'.repeat(4)}</div></div><div class="meta"><b>Full colour (PDF, email)</b></div></div>
+        <div class="card"><div class="stage" style="display:block;padding:28px;font-family:ui-monospace,monospace"><div style="display:grid;justify-items:center;gap:8px;border-bottom:1px dashed #0F172A;padding-bottom:14px">${lockup(18, 't-ink', 'v')}</div><div style="display:grid;gap:6px;margin-top:14px;font-size:12px;color:#0F172A"><div style="display:flex;justify-content:space-between"><span>Item</span><span>—</span></div><div style="display:flex;justify-content:space-between"><span>Total</span><span>—</span></div></div></div><div class="meta"><b>Thermal receipt (one colour)</b><span class="note">Stacked lockup in ink; underline and fold stay.</span></div></div>
+      </div>` +
+      `<h3>Shop window sticker &amp; storefront sign</h3><div class="grid g2">
+        <div class="card"><div class="stage" style="background:linear-gradient(135deg,#CBD5E1,#94A3B8);min-height:300px"><div class="sticker"><div style="display:grid;gap:12px;justify-items:center"><span style="font:700 11px Inter;letter-spacing:.12em;color:#027B7F">VERIFIED SHOP</span>${lockup(15, '', 'v')}<span style="font:600 10px Inter;color:#64748B">Prices listed online</span></div></div></div><div class="meta"><b>Window sticker (round, 120 mm)</b></div></div>
+        <div class="card"><div class="stage" style="background:linear-gradient(180deg,#D6D3CE,#A8A29E);min-height:300px;align-items:center"><div class="sign">${lockup(34, 't-teal')}</div></div><div class="meta"><b>Storefront / kiosk sign</b><span class="note">Teal board, white symbol and name, orange stroke.</span></div></div>
+      </div>`;
+  })();
+
+  // ---- Email
+  $('email-wrap').innerHTML =
+    card('Email signature', '', `<div style="width:100%;font:400 13px/20px Inter;color:#334155"><div style="color:#0F172A;font-weight:600">Your Name</div><div>Partnerships</div><div style="margin:12px 0 10px">${lockup(15)}</div><div style="color:#64748B;font-size:12px">+92 3XX XXXXXXX · name@resale.com.pk</div></div>`) +
+    card('Newsletter header', '', `<div style="width:100%;max-width:520px;border:1px solid var(--slate-200);border-radius:10px;overflow:hidden"><div style="padding:18px 22px;border-bottom:3px solid #FD7009;display:flex;justify-content:space-between;align-items:center">${lockup(18)}<span class="note">Weekly price digest</span></div><div style="padding:22px;display:grid;gap:10px"><b style="font-size:18px">This week's biggest price drops</b>${'<div style="height:10px;background:#F1F5F9;border-radius:4px"></div>'.repeat(3)}</div></div>`, 'var(--slate-50)');
+
+  // ---- Partner badges
+  const badge = (theme, bg, border, label, labelC) => `<span style="display:inline-flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:${bg};border:1px solid ${border}"><span style="display:grid;gap:6px"><span style="font:600 10px Inter;letter-spacing:.1em;color:${labelC}">${label}</span>${lockup(17, theme)}</span></span>`;
+  $('partner-wrap').innerHTML = [
+    card('Light badge', 'For shop websites on light pages.', badge('', '#fff', 'var(--slate-200)', 'VERIFIED SHOP ON', 'var(--teal-600)'), 'var(--slate-50)'),
+    card('Dark badge', '', badge('t-dark', 'var(--dark-surface)', 'var(--dark-border)', 'VERIFIED SHOP ON', 'var(--slate-400)'), 'var(--dark-page)'),
+    card('Compact pill', 'Facebook page buttons, receipt footers.', `<span style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--teal-soft);font:600 12px Inter;color:var(--teal-800)"><img src="${MARK.flat}" width="18" height="18" alt="">Listed on <span style="font-size:15px">${wm()}</span></span>`),
+  ].join('');
+
+  // ---- Do & don't
+  const dont = (t, html, bg = '#fff') => card(t, '', html, bg, 'dont');
+  const doo = (t, html, bg = '#fff') => card(t, '', html, bg, 'do');
+  $('misuse-grid').innerHTML = [
+    doo('Use the lockup as supplied', lockup(24)),
+    dont('Don\'t drop ".com.pk"', `<span class="lockup" style="font-size:24px"><img src="${MARK.full}" alt=""><span class="wm"><span class="n">resale</span></span></span>`),
+    dont('Don\'t remove the underline or fold', `<span class="lockup" style="font-size:24px"><img src="${MARK.full}" alt=""><span class="wm"><span class="n">resale</span><span class="d">.com.pk</span></span></span>`),
+    dont('Don\'t recolour the stroke', `<span class="lockup" style="font-size:24px;--wm-line:#1D4ED8;--wm-fold:#1E40AF"><img src="${MARK.full}" alt="">${wm()}</span>`),
+    dont('Don\'t make the domain bigger than the name', `<span class="lockup" style="font-size:20px"><img src="${MARK.full}" alt=""><span class="wm"><span class="n">resale</span><span class="d" style="font-size:1.15em">.<span class="u">com.pk</span></span></span></span>`),
+    dont('Don\'t use full colour on dark', `<span class="lockup" style="font-size:24px"><img src="${MARK.full}" alt="">${wm()}</span>`, 'var(--ink-950)'),
+    dont('Don\'t change the font or capitalise', `<span class="lockup" style="font-size:24px"><img src="${MARK.full}" alt=""><span class="wm" style="font-family:Georgia,serif;letter-spacing:0"><span class="n">Resale</span><span class="d">.<span class="u">Com.Pk</span></span></span></span>`),
+    dont('Don\'t stretch or add effects', `<span class="lockup" style="font-size:24px;transform:scaleX(1.35);filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))"><img src="${MARK.full}" alt="">${wm()}</span>`),
+    dont('Don\'t place on busy or orange backgrounds', lockup(24), 'linear-gradient(135deg,#FD7009,#FE8D14)'),
+  ].join('');
+</script>
+</body>
+</html>
