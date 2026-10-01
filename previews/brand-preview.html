@@ -235,6 +235,23 @@
   <h3 style="margin-top:32px">One system, everywhere: H3</h3>
   <div id="sys-h3"></div>
 
+  <!-- ============ PRICE TAG ============ -->
+  <h2>2e. ".com.pk" as a price tag</h2>
+  <p class="lead">Grown from H3. The tag has one pointed end cut at the hexagon's 60° and a punched hole, and the hole is the orange hexagon, so the "." is still there. A price tag fits a marketplace whose whole job is comparing prices.</p>
+  <div class="grid" id="tag-grid"></div>
+  <h3 style="margin-top:32px">Size test: P1 and P2</h3>
+  <div class="frame"><div id="tag-sizes" style="padding:24px;display:grid;gap:22px"></div></div>
+  <h3 style="margin-top:32px">One system, everywhere: P2</h3>
+  <div id="sys-p"></div>
+
+  <!-- ============ RIBBON ============ -->
+  <h2>2f. More ribbon ideas (from H2)</h2>
+  <p class="lead">Every piece here is cut from the symbol's ribbon: vertical sides and 30° ends, in the symbol's own teal and orange.</p>
+  <div class="frame" style="padding:24px;display:flex;gap:36px;align-items:center;flex-wrap:wrap" id="ribbon-parts"></div>
+  <div class="grid" id="ribbon-grid"></div>
+  <h3 style="margin-top:32px">One system, everywhere: R1</h3>
+  <div id="sys-r"></div>
+
   <!-- ============ ASSETS ============ -->
   <h2>3. Logo asset set</h2>
   <p class="lead">All generated from the master by <code>tools/gen-assets.js</code>.</p>
@@ -512,7 +529,7 @@
     const tile = (t, html, bg = '#fff', h = 170) => `<div class="card"><div class="stage" style="background:${bg};min-height:${h}px;align-items:center;justify-content:center">${html}</div><div class="meta"><b>${t}</b></div></div>`;
     const E = H[6];
     // A filled tag disappears on teal or in one colour, so H3 falls back to its outlined form (H4) there.
-    const alt = v === H[2] ? H[3] : v;
+    const alt = v.alt || (v === H[2] ? H[3] : v);
     return head() + head(true) +
       `<div class="phones" style="margin-top:16px">${phone()}${phone(true)}</div>` +
       `<div class="grid">` +
@@ -526,6 +543,92 @@
   };
   document.getElementById('sys-h1').innerHTML = system(H[0]);
   document.getElementById('sys-h3').innerHTML = system(H[2]);
+
+  // ---------- Price tag ----------
+  const wmWrap = (s, f, inner, extra = '') => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:center;${extra}${f}">${inner}</span>`;
+  const nameSpan = (d, extra = '') => `<span style="color:${d ? T.white : T.teal};line-height:1;${extra}">resale</span>`;
+  // Tag: pointed left end (60° like the hexagon), small chamfers on the right, hexagon "hole" near the point.
+  const priceTag = ({ ds, bg, fg, hole, tilt = 0, outline, string, d }) => {
+    const h = Math.round(ds * 1.8), p = Math.round(h / 2 * TAN30 * 1.15), ch = Math.max(2, Math.round(h * .12));
+    const shape = `polygon(${p}px 0,calc(100% - ${ch}px) 0,100% ${ch}px,100% calc(100% - ${ch}px),calc(100% - ${ch}px) 100%,${p}px 100%,0 50%)`;
+    const content = `<span style="display:inline-flex;align-items:center;gap:${Math.round(ds * .45)}px">${hexDot(hole, .5)}<span style="font-weight:600;letter-spacing:.01em">com.pk</span></span>`;
+    const pad = `0 ${Math.round(ds * .6)}px 0 ${p + Math.round(ds * .15)}px`;
+    let tag = `<span style="display:inline-flex;align-items:center;height:${h}px;padding:${pad};background:${bg};color:${fg};font-size:${ds}px;clip-path:${shape}">${content}</span>`;
+    if (outline) {
+      const bw = Math.max(1.5, ds / 9);
+      tag = `<span style="display:inline-flex;padding:${bw}px;background:${outline};clip-path:${shape}"><span style="display:inline-flex;align-items:center;height:${h - bw * 2}px;padding:${pad};background:${bg};color:${fg};font-size:${ds}px;clip-path:${shape}">${content}</span></span>`;
+    }
+    const str = string ? `<svg aria-hidden="true" width="${Math.round(ds * 2.1)}" height="${h}" viewBox="0 0 32 36" preserveAspectRatio="none" style="position:absolute;left:-${Math.round(ds * 1.25)}px;top:-${Math.round(h * .35)}px;overflow:visible"><path d="M2 4 C 10 4, 20 16, 30 30.5" fill="none" stroke="${d ? '#64748B' : '#94A3B8'}" stroke-width="1.6" stroke-linecap="round"/></svg>` : '';
+    return `<span style="position:relative;display:inline-flex;transform:rotate(${tilt}deg);transform-origin:0 50%">${str}${tag}</span>`;
+  };
+  const P = [
+    { k: 'P1', name: 'Hang tag with string', tag: ['rec', 'Most "price tag"'], note: 'Tilted 6° and tied to "resale" with a thin string. Playful and instantly reads as "price".',
+      word: (s, d, f) => wmWrap(s, f, nameSpan(d) + `<span style="margin-left:${Math.round(s * .55)}px">${priceTag({ ds: Math.max(11, Math.round(s * .52)), bg: d ? T.teal6 : T.teal, fg: '#fff', hole: T.orange, tilt: 6, string: true, d })}</span>`) },
+    { k: 'P2', name: 'Flat tag, pointing at the name', tag: ['rec', 'Recommended'], note: 'No tilt or string: the tag\'s point aims at "resale". Clean enough for every header, still clearly a tag.',
+      word: (s, d, f) => wmWrap(s, f, nameSpan(d) + `<span style="margin-left:${Math.round(s * .2)}px">${priceTag({ ds: Math.max(11, Math.round(s * .52)), bg: d ? T.teal6 : T.teal, fg: '#fff', hole: T.orange, d })}</span>`) },
+    { k: 'P3', name: 'Outlined tag', note: 'Line version of P2. Use on teal, on photos and in single-colour print.',
+      word: (s, d, f) => { const c = d ? '#CCDCDD' : T.teal; return wmWrap(s, f, nameSpan(d) + `<span style="margin-left:${Math.round(s * .2)}px">${priceTag({ ds: Math.max(11, Math.round(s * .52)), bg: d ? '#111A2B' : '#fff', fg: c, hole: T.orange, outline: c, d })}</span>`); } },
+    { k: 'P4', name: 'Orange tag', tag: ['warn', 'Promotions'], note: 'The commercial-accent colour as the tag, ink text for contrast (guidelines §5), teal hole. Loud; best for sale campaigns.',
+      word: (s, d, f) => wmWrap(s, f, nameSpan(d) + `<span style="margin-left:${Math.round(s * .2)}px">${priceTag({ ds: Math.max(11, Math.round(s * .52)), bg: T.orange, fg: T.ink, hole: d ? T.white : T.teal, d })}</span>`) },
+    { k: 'P5', name: 'Swing tag hanging below', note: 'Stacked: the tag hangs under the end of "resale" on its string. Compact width for mobile and square formats.',
+      word: (s, d, f) => wmWrap(s, f, nameSpan(d) + `<span style="align-self:flex-end;margin:${Math.round(s * .3)}px ${Math.round(s * .05)}px 0 0">${priceTag({ ds: Math.max(11, Math.round(s * .46)), bg: d ? T.teal6 : T.teal, fg: '#fff', hole: T.orange, tilt: 8, string: true, d })}</span>`, 'flex-direction:column;align-items:flex-start;') },
+    { k: 'P6', name: 'Shelf label', note: 'Like a supermarket shelf price: an orange block with the hexagon hole, then the domain on white with a teal edge.',
+      word: (s, d, f) => { const ds = Math.max(11, Math.round(s * .52)), h = Math.round(ds * 1.8);
+        return wmWrap(s, f, nameSpan(d) + `<span style="margin-left:${Math.round(s * .25)}px;display:inline-flex;height:${h}px;border-radius:${Math.round(h * .18)}px;overflow:hidden;box-shadow:inset 0 0 0 1.5px ${d ? T.teal6 : T.teal};font-size:${ds}px"><span style="width:${h}px;display:grid;place-items:center;background:${T.orange}">${hexDot(d ? '#fff' : T.teal, .55)}</span><span style="display:inline-flex;align-items:center;padding:0 ${Math.round(ds * .6)}px;color:${d ? '#E2E8F0' : T.teal};background:${d ? '#111A2B' : '#fff'};font-weight:600;letter-spacing:.01em">com.pk</span></span>`); } },
+  ];
+  P[0].alt = P[2]; P[1].alt = P[2]; P[3].alt = P[2]; P[4].alt = P[2];
+  const tagCard = v => `
+    <div class="card">
+      <div class="stage" style="gap:26px;padding:34px 20px">${hexLockup(v, 26)}${hexLockup(v, 19)}</div>
+      <div class="stage d" style="padding:34px 20px">${hexLockup(v, 26, true)}</div>
+      <div class="meta"><b>${v.k} · ${v.name} ${v.tag ? `<span class="tag ${v.tag[0]}">${v.tag[1]}</span>` : ''}</b><span class="note">${v.note}</span></div>
+    </div>`;
+  document.getElementById('tag-grid').innerHTML = P.map(tagCard).join('');
+  document.getElementById('tag-sizes').innerHTML = [40, 30, 24, 20, 16].map(s => `
+    <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap"><span class="note" style="width:44px">${s}px</span>${hexLockup(P[0], s)}${hexLockup(P[1], s)}</div>`).join('');
+  document.getElementById('sys-p').innerHTML = system(P[1]);
+
+  // ---------- Ribbon ----------
+  // Ribbon segment: vertical sides, top and bottom at 30°. "/" rises to the right, "\" mirrors it.
+  const seg = (dir, x, w, h, fill) => {
+    const r = w * TAN30;
+    return dir === '/'
+      ? `<polygon points="${x},${r} ${x + w},0 ${x + w},${h} ${x},${h + r}" fill="${fill}" stroke="${fill}" stroke-width="6" stroke-linejoin="round"/>`
+      : `<polygon points="${x},0 ${x + w},${r} ${x + w},${h + r} ${x},${h}" fill="${fill}" stroke="${fill}" stroke-width="6" stroke-linejoin="round"/>`;
+  };
+  const glyph = (inner, vbW, vbH, w, extra = '') => `<svg aria-hidden="true" viewBox="-4 -4 ${vbW + 8} ${vbH + 8}" style="width:${w}em;height:auto;overflow:visible;${extra}">${inner}</svg>`;
+  const R = {
+    mirror: c => glyph(seg('\\', 0, 100, 100, c), 100, 157.7, .2, 'margin:0 .07em 0 .08em') + srDot,
+    cap: () => glyph(seg('/', 0, 50, 62, T.teal) + seg('\\', 50, 50, 62, T.orange), 100, 90.9, .46, 'margin:0 .07em 0 .08em') + srDot,
+    capD: () => glyph(seg('/', 0, 50, 62, '#fff') + seg('\\', 50, 50, 62, T.orange), 100, 90.9, .46, 'margin:0 .07em 0 .08em') + srDot,
+    depth: () => glyph(`<polygon points="0,57.7 100,0 100,46 0,103.7" fill="#FE8D14"/><polygon points="0,103.7 100,46 100,100 0,157.7" fill="#E55106"/>`, 100, 157.7, .25, 'margin:0 .07em 0 .08em') + srDot,
+    tall: c => glyph(seg('/', 0, 60, 230, c), 60, 264.6, .16, 'margin:0 .12em 0 .12em;align-self:center') + srDot,
+  };
+  const dom = (s, d, ratio = .7, extra = '') => `<span style="font-size:${Math.max(11, Math.round(s * ratio))}px;color:${d ? T.s400 : T.slate};${extra}">com.pk</span>`;
+  const RV = [
+    { k: 'R1', name: 'Hexagon cap', tag: ['rec', 'Recommended'], note: 'A teal "/" and an orange "\\" ribbon meet in a point: the top of the symbol\'s hexagon, in its own two colours.',
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}">${nameSpan(d)}${d ? R.capD() : R.cap()}${dom(s, d)}</span>` },
+    { k: 'R2', name: 'Folded ribbon dot', note: 'H2\'s ribbon with the symbol\'s fold: light orange face over the deep-orange panel, like the orange inner panels.',
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}">${nameSpan(d)}${R.depth()}${dom(s, d)}</span>` },
+    { k: 'R3', name: 'Ribbon in every dot', note: 'Both dots in ".com.pk" become ribbons too, alternating direction like the symbol\'s left and right halves.',
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}">${nameSpan(d)}${ribbonDot(T.orange)}<span style="font-size:${Math.max(11, Math.round(s * .7))}px;color:${d ? T.s400 : T.slate};display:inline-flex;align-items:baseline">com${R.mirror(d ? T.s400 : T.teal)}pk</span></span>` },
+    { k: 'R4', name: 'Ribbon divider', note: 'A tall ribbon stands between name and domain like a fold in the paper. Works as a separator at any size.',
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:center;${f}">${nameSpan(d)}${R.tall(T.orange)}${dom(s, d, .62, 'font-weight:600')}</span>` },
+    { k: 'R5', name: 'Ribbon underline', note: 'An orange ribbon with 30° ends sits under ".com.pk", like a marker stroke. The dot stays a ribbon.',
+      word: (s, d, f) => { const ds = Math.max(11, Math.round(s * .66)); return `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}">${nameSpan(d)}${ribbonDot(T.orange)}<span style="position:relative;font-size:${ds}px;color:${d ? T.s400 : T.slate}">com.pk<svg aria-hidden="true" viewBox="0 0 100 12" preserveAspectRatio="none" style="position:absolute;left:-2%;bottom:-.32em;width:104%;height:.26em"><polygon points="0,12 4,0 100,0 96,12" fill="${T.orange}"/></svg></span></span>`; } },
+    { k: 'R6', name: 'Ribbon banner', note: '".com.pk" on a teal ribbon banner with a 30° swallowtail end, like a rosette ribbon. Pairs with P-series tags.',
+      word: (s, d, f) => { const ds = Math.max(11, Math.round(s * .52)), h = Math.round(ds * 1.8), n = Math.round(h / 2 * TAN30 * 1.6);
+        return `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:center;gap:${Math.round(s * .22)}px;${f}">${nameSpan(d)}<span style="display:inline-flex;align-items:center;gap:${Math.round(ds * .4)}px;height:${h}px;padding:0 ${n + Math.round(ds * .55)}px 0 ${Math.round(ds * .6)}px;font-size:${ds}px;font-weight:600;color:#fff;background:${d ? T.teal6 : T.teal};clip-path:polygon(0 0,100% 0,calc(100% - ${n}px) 50%,100% 100%,0 100%)">${ribbonDot(T.orange, .32)}com.pk</span></span>`; } },
+    { k: 'R7', name: 'Mirrored ribbon dot', note: 'H2 leaning the other way ("\\"), like the symbol\'s orange pieces. Feels like the name is "falling forward" into the domain.',
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}">${nameSpan(d)}${R.mirror(T.orange)}${dom(s, d)}</span>` },
+    { k: 'R8', name: 'Hexagon cap in Sora', note: 'R1 with a display face. Sora\'s geometric shapes match the ribbons\' rounded corners.', font: "font-family:Sora;font-weight:700;letter-spacing:-.03em",
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;font-family:Sora;font-weight:700;letter-spacing:-.03em;${f}">${nameSpan(d)}${d ? R.capD() : R.cap()}${dom(s, d)}</span>` },
+  ];
+  document.getElementById('ribbon-parts').innerHTML =
+    `<span style="font-size:72px;display:inline-flex;gap:36px;align-items:center">${ribbonDot(T.orange, .3)}${R.mirror(T.orange).replace('.2em', '.3em')}${R.cap().replace('.46em', '.5em')}${R.depth().replace('.25em', '.3em')}${R.tall(T.orange).replace('.16em', '.2em')}</span>` +
+    `<span class="note">ribbon "/" · ribbon "\\" · hexagon cap · folded ribbon · tall divider</span>`;
+  document.getElementById('ribbon-grid').innerHTML = RV.map(v => hexCard(v)).join('');
+  document.getElementById('sys-r').innerHTML = system(RV[0]);
 </script>
 </body>
 </html>
