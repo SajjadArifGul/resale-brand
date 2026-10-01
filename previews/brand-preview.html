@@ -6,7 +6,7 @@
 <title>resale.com.pk brand preview</title>
 <link rel="icon" href="../logo/favicon/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hanken+Grotesk:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hanken+Grotesk:wght@500;700;800&family=Outfit:wght@600;700&family=Plus+Jakarta+Sans:wght@700;800&family=Sora:wght@600;700&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
   :root {
     --teal-900: #013E43; --teal-800: #024E53; --teal-600: #027B7F; --teal-soft: #E6EDEE;
@@ -211,6 +211,29 @@
 
   <h3 style="margin-top:32px">In the header</h3>
   <div id="small-headers"></div>
+
+  <!-- ============ HEX SYSTEM ============ -->
+  <h2>2d. Built from the logo's geometry</h2>
+  <p class="lead">The symbol is a pointy-top hexagon built from 30° diagonals and vertical sides (measured from the master: 29.1° and 29.9°). These variants reuse that geometry for the dot and for the ".com.pk" container, so the wordmark and the symbol look like they were drawn together.</p>
+
+  <div class="frame" style="padding:28px 24px;display:flex;gap:40px;align-items:center;flex-wrap:wrap">
+    <svg width="120" height="138" viewBox="-4 -4 108 123.5" aria-hidden="true"><polygon points="50,0 100,28.87 100,86.6 50,115.47 0,86.6 0,28.87" fill="none" stroke="var(--slate-300)" stroke-width="1.5" stroke-dasharray="4 4"/><image href="../logo/resale-logo-master.svg" x="2" y="10" width="96" height="96"/></svg>
+    <div style="display:grid;gap:14px">
+      <div style="display:flex;align-items:center;gap:14px" id="geo-parts"></div>
+      <span class="note">Hexagon dot · ribbon dot (vertical sides, 30° top) · hex-cut tag (60° ends) · ribbon tab (30° cut)</span>
+    </div>
+  </div>
+
+  <div class="grid" id="hex-grid"></div>
+
+  <h3 style="margin-top:32px">Display typeface options (wordmark only; UI stays Inter)</h3>
+  <p class="note" style="margin:0 0 4px">Many brands draw their wordmark in a display face and keep a neutral UI font. All shown with H1 (hexagon dot).</p>
+  <div class="grid" id="font-grid"></div>
+
+  <h3 style="margin-top:32px">One system, everywhere: H1</h3>
+  <div id="sys-h1"></div>
+  <h3 style="margin-top:32px">One system, everywhere: H3</h3>
+  <div id="sys-h3"></div>
 
   <!-- ============ ASSETS ============ -->
   <h2>3. Logo asset set</h2>
@@ -422,6 +445,87 @@
   document.getElementById('small-headers').innerHTML =
     smallHdr(S[0]) + smallHdr(S[3]) + smallHdr(S[0], true) + smallHdr(S[5]) +
     `<div class="phones" style="margin-top:16px">${smallPhone(S[0])}${smallPhone(S[3])}${smallPhone(S[5])}${smallPhone(S[0], true)}</div>`;
+
+  // ---------- Hex system ----------
+  // Geometry shared with the symbol: regular pointy-top hexagon, 30° ribbon diagonals.
+  const TAN30 = Math.tan(Math.PI / 6);
+  const srDot = `<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">.</span>`;
+  const hexDot = (c, w = .3) => `<svg aria-hidden="true" viewBox="-6 -6 112 127.47" style="width:${w}em;height:auto;margin:0 .06em 0 .07em;overflow:visible"><polygon points="50,0 100,28.87 100,86.6 50,115.47 0,86.6 0,28.87" fill="${c}" stroke="${c}" stroke-width="10" stroke-linejoin="round"/></svg>${srDot}`;
+  const ribbonDot = (c, w = .2) => `<svg aria-hidden="true" viewBox="-4 -4 108 165.7" style="width:${w}em;height:auto;margin:0 .07em 0 .08em;overflow:visible"><polygon points="0,57.7 100,0 100,100 0,157.7" fill="${c}" stroke="${c}" stroke-width="8" stroke-linejoin="round"/></svg>${srDot}`;
+  const hexTag = (inner, h, bg, fg, extra = '') => {
+    const p = Math.round(h / 2 * TAN30 * 1.0);
+    return `<span style="display:inline-flex;align-items:center;height:${h}px;padding:0 ${p + Math.round(h * .32)}px;gap:${Math.round(h * .14)}px;background:${bg};color:${fg};clip-path:polygon(${p}px 0,calc(100% - ${p}px) 0,100% 50%,calc(100% - ${p}px) 100%,${p}px 100%,0 50%);${extra}">${inner}</span>`;
+  };
+  const C = dark => ({ name: dark ? T.white : T.teal, dom: dark ? T.s400 : T.slate, rule: dark ? '#334155' : T.slate300 || '#CBD5E1' });
+
+  const H = [
+    { k: 'H1', name: 'Hexagon dot', tag: ['rec', 'Recommended'], note: 'The full stop becomes a tiny version of the symbol\'s outline. Simple, ownable, survives any size.',
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}"><span style="color:${C(d).name}">resale</span>${hexDot(T.orange)}<span style="font-size:${Math.max(11, Math.round(s * .7))}px;color:${C(d).dom}">com.pk</span></span>` },
+    { k: 'H2', name: 'Ribbon dot', note: 'The dot is one ribbon segment of the symbol: vertical sides, 30° top. Feels hand-made and technical.',
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}"><span style="color:${C(d).name}">resale</span>${ribbonDot(T.orange)}<span style="font-size:${Math.max(11, Math.round(s * .7))}px;color:${C(d).dom}">com.pk</span></span>` },
+    { k: 'H3', name: 'Hex-cut domain tag', tag: ['rec', 'Most distinctive'], note: '".com.pk" lives in a hexagon-ended tag, like a price tag or a TLD badge. Strong for a marketplace.',
+      word: (s, d, f) => { const ds = Math.max(11, Math.round(s * .55)); return `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:center;gap:${Math.round(s * .2)}px;${f}"><span style="color:${C(d).name}">resale</span>${hexTag(`${hexDot(T.orange, .42)}<span style="font-weight:600;letter-spacing:0">com.pk</span>`, Math.round(ds * 1.75), d ? T.teal6 : T.teal, '#fff', `font-size:${ds}px`)}</span>`; } },
+    { k: 'H4', name: 'Outlined hex tag', note: 'Lighter version of H3: teal outline instead of a filled tag. Works where a solid block feels heavy.',
+      word: (s, d, f) => { const ds = Math.max(11, Math.round(s * .55)), h = Math.round(ds * 1.75), bw = Math.max(1.5, s / 16); const c = d ? '#CCDCDD' : T.teal;
+        const inner = hexTag(`${hexDot(T.orange, .42)}<span style="font-weight:600;letter-spacing:0">com.pk</span>`, h - bw * 2, d ? '#111A2B' : '#fff', c, `font-size:${ds}px`);
+        return `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:center;gap:${Math.round(s * .2)}px;${f}"><span style="color:${C(d).name}">resale</span>${hexTag(inner, h, c, c, `padding:0 ${bw}px;font-size:${ds}px`)}</span>`; } },
+    { k: 'H5', name: 'Ribbon tab', note: '".com.pk" hangs off the end of "resale" on a tab cut at the symbol\'s 30° angle, like a ribbon folding down.',
+      word: (s, d, f) => { const ds = Math.max(11, Math.round(s * .5)), h = Math.round(ds * 1.6), cut = Math.round(h * TAN30 * 1.7);
+        return `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;flex-direction:column;align-items:flex-end;${f}"><span style="color:${C(d).name};line-height:1">resale</span><span style="margin-top:${Math.round(s * .12)}px;margin-right:-${Math.round(s * .06)}px;display:inline-flex;align-items:center;gap:${Math.round(ds * .3)}px;height:${h}px;padding:0 ${Math.round(ds * .55)}px 0 ${cut + Math.round(ds * .2)}px;font-size:${ds}px;font-weight:600;letter-spacing:.01em;background:${d ? T.teal6 : T.teal};color:#fff;clip-path:polygon(${cut}px 0,100% 0,100% 100%,0 100%)">${hexDot(T.orange, .42)}com.pk</span></span>`; } },
+    { k: 'H6', name: 'Symbol as the dot', note: 'For wordmark-only use (no separate symbol nearby): the full-colour symbol replaces the full stop.',
+      noMark: true,
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}"><span style="color:${C(d).name}">resale</span><img aria-hidden="true" src="../logo/${d ? 'resale-logo-mono-white.svg' : (s > 22 ? 'resale-logo-master.svg' : 'resale-logo-flat.svg')}" style="width:.8em;height:.8em;margin:0 .1em 0 .12em;align-self:center;transform:translateY(.06em)">${srDot}<span style="font-size:${Math.max(11, Math.round(s * .7))}px;color:${C(d).dom}">com.pk</span></span>` },
+    { k: 'H7', name: 'Emblem (square formats)', note: 'Stacked for avatars, stickers, splash screens and shop-window decals. Hairlines frame the domain.', vertical: true,
+      word: (s, d, f) => { const ds = Math.max(11, Math.round(s * .42)); return `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:${Math.round(s * .22)}px;${f}"><span style="color:${C(d).name};line-height:1">resale</span><span style="display:inline-flex;align-items:center;gap:${Math.round(ds * .5)}px;font-size:${ds}px;color:${C(d).dom};letter-spacing:.08em;font-weight:600"><i style="display:block;width:${ds * 1.6}px;height:1px;background:${d ? '#334155' : '#CBD5E1'}"></i>${hexDot(T.orange, .5)}com.pk<i style="display:block;width:${ds * 1.6}px;height:1px;background:${d ? '#334155' : '#CBD5E1'}"></i></span></span>`; } },
+    { k: 'H8', name: 'Technical domain (monospace)', note: '"com.pk" set in a monospace face: reads like an address bar. Suits a tech marketplace.',
+      word: (s, d, f) => `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}"><span style="color:${C(d).name}">resale</span>${hexDot(T.orange)}<span style="font:600 ${Math.max(11, Math.round(s * .62))}px 'JetBrains Mono',monospace;letter-spacing:-.02em;color:${C(d).dom}">com.pk</span></span>` },
+  ];
+  const hexLockup = (v, s, dark, f = '') => {
+    if (v.noMark) return v.word(s, dark, f);
+    const mark = dark ? 'resale-logo-mono-white.svg' : (s * 1.6 > 32 ? 'resale-logo-master.svg' : 'resale-logo-flat.svg');
+    if (v.vertical) return `<span class="brand" style="flex-direction:column;gap:${Math.round(s * .45)}px"><img src="../logo/${mark}" width="${Math.round(s * 2.6)}" height="${Math.round(s * 2.6)}" alt="">${v.word(s, dark, f)}</span>`;
+    return `<span class="brand" style="align-items:center"><img src="../logo/${mark}" width="${Math.round(s * 1.6)}" height="${Math.round(s * 1.6)}" alt="">${v.word(s, dark, f)}</span>`;
+  };
+  const hexCard = (v, f = '', label = '') => `
+    <div class="card">
+      <div class="stage" style="${v.vertical ? 'align-items:center' : ''}">${hexLockup(v, 26, false, f)}${v.vertical ? '' : hexLockup(v, 19, false, f)}</div>
+      <div class="stage d" style="${v.vertical ? 'align-items:center' : ''}">${hexLockup(v, v.vertical ? 22 : 26, true, f)}</div>
+      <div class="meta"><b>${label || `${v.k} · ${v.name}`} ${!label && v.tag ? `<span class="tag ${v.tag[0]}">${v.tag[1]}</span>` : ''}</b>${label ? '' : `<span class="note">${v.note}</span>`}</div>
+    </div>`;
+  document.getElementById('geo-parts').innerHTML =
+    `<span style="font-size:64px;display:inline-flex;gap:28px;align-items:center">${hexDot(T.orange, .4)}${ribbonDot(T.orange, .3)}</span>` +
+    hexTag('<span style="font:600 14px Inter">com.pk</span>', 28, T.teal, '#fff') +
+    `<span style="display:inline-flex;align-items:center;height:28px;padding:0 12px 0 26px;background:${T.teal};color:#fff;font:600 14px Inter;clip-path:polygon(16px 0,100% 0,100% 100%,0 100%)">com.pk</span>`;
+  document.getElementById('hex-grid').innerHTML = H.map(v => hexCard(v)).join('');
+  const FONTS = [['Outfit 700', "font-family:Outfit;font-weight:700;letter-spacing:-.01em"], ['Plus Jakarta Sans 800', "font-family:'Plus Jakarta Sans';font-weight:800;letter-spacing:-.025em"], ['Sora 700', "font-family:Sora;font-weight:700;letter-spacing:-.03em"], ['Inter 700 (guidelines)', '']];
+  document.getElementById('font-grid').innerHTML = FONTS.map(([n, f]) => hexCard(H[0], f, `${n} · H1`)).join('');
+
+  // System sheet: the same lockup across real touchpoints.
+  const system = v => {
+    const head = (dark) => `
+      <div class="frame${dark ? ' dark' : ''}"><div class="frame-label"><span>Desktop header · ${dark ? 'dark' : 'light'}</span></div>
+        <header class="hdr"><a class="brand" href="#" style="align-items:center">${hexLockup(v, 24, dark)}</a>
+        <div class="search">⌕ Search models: Latitude 7420, ThinkPad…</div>
+        <nav><a class="active" href="#">Laptops</a><a href="#">Mobiles</a><a href="#">Components</a><a href="#">Desktops</a><a href="#">Servers</a></nav>
+        <div class="actions"><span class="btn primary"${dark ? ' style="background:var(--teal-600)"' : ''}>For shops</span></div></header></div>`;
+    const phone = dark => `<div class="phone${dark ? ' dark-p' : ''}"><div class="bar"></div><header class="hdr">${hexLockup(v, 20, dark)}<div class="actions"><span class="icon-btn">☰</span></div></header><div class="body note">Mobile · 20px</div></div>`;
+    const tile = (t, html, bg = '#fff', h = 170) => `<div class="card"><div class="stage" style="background:${bg};min-height:${h}px;align-items:center;justify-content:center">${html}</div><div class="meta"><b>${t}</b></div></div>`;
+    const E = H[6];
+    // A filled tag disappears on teal or in one colour, so H3 falls back to its outlined form (H4) there.
+    const alt = v === H[2] ? H[3] : v;
+    return head() + head(true) +
+      `<div class="phones" style="margin-top:16px">${phone()}${phone(true)}</div>` +
+      `<div class="grid">` +
+      tile('Footer', `<div style="display:grid;gap:10px;justify-items:start;width:100%">${hexLockup(v, 18)}<span class="note">Verified tech shops across Pakistan · © 2026</span></div>`, '#F1F5F9') +
+      tile('Social avatar (circle crop)', `<span style="width:150px;height:150px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 1px 3px rgba(15,23,42,.15)">${hexLockup(E, 15)}</span>`, '#E2E8F0', 200) +
+      tile('Shop window sticker', `<span style="padding:18px 22px;border-radius:16px;background:${T.teal};display:grid;gap:8px;justify-items:center"><span style="font:600 11px Inter;color:#CCDCDD;letter-spacing:.08em">VERIFIED SHOP ON</span>${hexLockup(alt, 20, true)}</span>`, '#F8FAFC', 200) +
+      tile('Invoice / receipt (single colour)', `<span style="filter:grayscale(1) contrast(2.2)">${hexLockup(alt, 22)}</span>`) +
+      tile('Email signature', `<div style="display:grid;gap:4px;font:400 13px Inter;color:#334155;width:100%"><b style="color:#0F172A">Ahmed Khan</b><span>Partnerships</span><span style="margin-top:8px">${hexLockup(v, 15)}</span></div>`) +
+      tile('Photo overlay', `<span style="width:100%;height:150px;border-radius:12px;background:linear-gradient(135deg,#334155,#0F172A);display:flex;align-items:flex-end;padding:14px">${hexLockup(v, 18, true)}</span>`) +
+      `</div>`;
+  };
+  document.getElementById('sys-h1').innerHTML = system(H[0]);
+  document.getElementById('sys-h3').innerHTML = system(H[2]);
 </script>
 </body>
 </html>
