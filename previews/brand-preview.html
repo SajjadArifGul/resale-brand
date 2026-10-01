@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>resale.com.pk brand preview</title>
+<link rel="icon" href="../logo/favicon/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hanken+Grotesk:wght@500;700;800&display=swap">
+<style>
+  :root {
+    --teal-900: #013E43; --teal-800: #024E53; --teal-600: #027B7F; --teal-soft: #E6EDEE;
+    --orange-600: #FD7009; --orange-text: #C2410C; --orange-soft: #FFF1E6;
+    --ink-950: #0F172A; --ink-800: #1E293B; --slate-700: #334155; --slate-500: #64748B;
+    --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0; --slate-100: #F1F5F9; --slate-50: #F8FAFC;
+    --dark-page: #0B1220; --dark-surface: #111A2B; --dark-border: #23314A;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--slate-50); color: var(--ink-950); }
+  main { max-width: 1200px; margin: 0 auto; padding: 40px 16px 80px; }
+  h1 { font-size: 32px; line-height: 40px; margin: 0 0 8px; }
+  h2 { font-size: 24px; line-height: 32px; margin: 56px 0 4px; }
+  h3 { font-size: 16px; line-height: 24px; margin: 0 0 12px; font-weight: 600; }
+  p.lead { color: var(--slate-500); margin: 0 0 24px; max-width: 760px; line-height: 24px; }
+  .note { font-size: 13px; color: var(--slate-500); line-height: 20px; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+  .tag.rec { background: var(--teal-soft); color: var(--teal-800); }
+  .tag.ok { background: var(--slate-100); color: var(--slate-700); }
+  .tag.warn { background: #FFFBEB; color: #92400E; }
+
+  /* Wordmark */
+  .wm { font-family: Inter, sans-serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1; white-space: nowrap; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { display: block; }
+
+  /* Frames */
+  .frame { background: #fff; border: 1px solid var(--slate-200); border-radius: 16px; overflow: hidden; margin-top: 16px; }
+  .frame-label { padding: 10px 16px; font-size: 12px; font-weight: 600; color: var(--slate-500); border-bottom: 1px solid var(--slate-200); background: var(--slate-50); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+
+  /* Browser chrome */
+  .chrome { background: #DEE1E6; padding: 8px 8px 0; }
+  .tab { display: inline-flex; align-items: center; gap: 8px; background: #fff; border-radius: 8px 8px 0 0; padding: 8px 14px; font-size: 12px; color: #202124; max-width: 280px; }
+  .tab img { width: 16px; height: 16px; }
+
+  /* Site header mock */
+  .hdr { display: flex; align-items: center; gap: 20px; height: 64px; padding: 0 24px; background: #fff; border-bottom: 1px solid var(--slate-200); }
+  .hdr .search { flex: 1; max-width: 300px; height: 40px; border: 1px solid var(--slate-200); border-radius: 10px; display: flex; align-items: center; padding: 0 12px; color: var(--slate-400); font-size: 14px; gap: 8px; }
+  .hdr nav { display: flex; gap: 20px; font-size: 14px; font-weight: 500; color: var(--slate-700); }
+  .hdr nav a { color: inherit; text-decoration: none; padding: 21px 0; border-bottom: 2px solid transparent; }
+  .hdr nav a.active { color: var(--teal-800); border-bottom-color: var(--orange-600); }
+  .hdr .actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .btn { height: 40px; padding: 0 16px; border-radius: 10px; font: 600 14px Inter, sans-serif; display: inline-flex; align-items: center; gap: 6px; border: 1px solid transparent; }
+  .btn.primary { background: var(--teal-800); color: #fff; }
+  .btn.ghost { background: #fff; border-color: var(--slate-200); color: var(--slate-700); }
+  .icon-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--slate-200); display: grid; place-items: center; color: var(--slate-700); }
+  .hero { padding: 40px 24px 48px; background: var(--slate-50); }
+  .hero small { color: var(--slate-500); font-size: 12px; }
+  .hero h4 { font-size: 36px; line-height: 44px; margin: 8px 0; max-width: 560px; }
+
+  /* Dark header */
+  .dark { background: var(--dark-page); }
+  .dark .hdr { background: var(--dark-surface); border-color: var(--dark-border); }
+  .dark .hdr nav { color: #CBD5E1; }
+  .dark .hdr nav a.active { color: #fff; }
+  .dark .search, .dark .icon-btn, .dark .btn.ghost { border-color: var(--dark-border); background: transparent; color: #94A3B8; }
+  .dark .hero { background: var(--dark-page); color: #F1F5F9; }
+  .dark .hero small { color: #94A3B8; }
+  .chip { background: #fff; border-radius: 10px; padding: 4px; display: inline-grid; place-items: center; }
+
+  /* Mobile */
+  .phones { display: flex; gap: 24px; flex-wrap: wrap; }
+  .phone { width: 375px; max-width: 100%; border: 1px solid var(--slate-200); border-radius: 24px; overflow: hidden; background: #fff; }
+  .phone .hdr { height: 56px; padding: 0 16px; gap: 12px; }
+  .phone .bar { height: 24px; background: #fff; }
+  .phone.dark-p .hdr, .phone.dark-p .bar { background: var(--dark-surface); border-color: var(--dark-border); }
+  .phone .body { padding: 16px; height: 120px; background: var(--slate-50); }
+  .phone.dark-p .body { background: var(--dark-page); }
+
+  /* Wordmark grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; margin-top: 16px; }
+  .card { background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+  .card .stage { padding: 28px 20px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+  .card .stage.d { background: var(--dark-surface); }
+  .card .meta { padding: 12px 16px 16px; border-top: 1px solid var(--slate-200); display: grid; gap: 6px; }
+  .card .meta b { font-size: 14px; }
+  .swatches { display: flex; gap: 6px; flex-wrap: wrap; }
+  .sw { display: inline-flex; align-items: center; gap: 4px; font: 500 11px ui-monospace, monospace; color: var(--slate-500); }
+  .sw i { width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(0,0,0,.1); }
+
+  .stacked { display: inline-flex; flex-direction: column; align-items: flex-end; line-height: 1; }
+
+  /* Assets */
+  .assets { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; margin-top: 16px; }
+  .asset { background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; overflow: hidden; }
+  .asset .pic { height: 150px; display: grid; place-items: center; background: var(--slate-50); }
+  .asset .pic.d { background: var(--ink-950); }
+  .asset .cap { padding: 10px 12px; font-size: 12px; line-height: 16px; color: var(--slate-700); }
+  .asset .cap code { color: var(--slate-500); word-break: break-all; }
+  .sizes { display: flex; align-items: end; gap: 24px; padding: 24px; flex-wrap: wrap; background: #fff; }
+  .sizes figure { margin: 0; text-align: center; font-size: 11px; color: var(--slate-500); }
+  .sizes figure img { display: block; margin: 0 auto 6px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 14px; background: #fff; }
+  td, th { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--slate-200); vertical-align: top; }
+  th { font-size: 12px; color: var(--slate-500); font-weight: 600; }
+  .hdr .search, .tab { white-space: nowrap; overflow: hidden; }
+  .hdr { min-width: 0; } .hdr .brand { flex-shrink: 0; }
+  @media (max-width: 1180px) { .hdr nav a:nth-child(n+4) { display: none; } }
+  @media (max-width: 960px) { .frame .hdr nav, .frame .hdr .search { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>resale.com.pk brand preview</h1>
+  <p class="lead">Header mockups, wordmark colour options and the new logo asset set, all built from <code>logo/resale-logo-master.svg</code>. Wordmark follows guidelines §9: Inter 700, lowercase, <code>[Logo] resale.com.pk</code>.</p>
+
+  <!-- ============ HEADERS ============ -->
+  <h2>1. Website header</h2>
+  <p class="lead">Recommended wordmark (option A below) at real size. Desktop uses the full gradient master at 36px; mobile uses the flat mark at 28px (guidelines §10: 32px and below → flat).</p>
+
+  <div class="frame">
+    <div class="frame-label"><span>Desktop · light (default)</span><span>Logo 36px full gradient · wordmark 22px</span></div>
+    <div class="chrome"><span class="tab"><img src="../logo/favicon/favicon.svg" alt="">resale.com.pk: Compare verified tech shops</span></div>
+    <header class="hdr">
+      <a class="brand" href="#"><img src="../logo/resale-logo-master.svg" width="36" height="36" alt=""><span class="wm" style="font-size:22px"><span style="color:var(--teal-800)">resale</span><span style="color:var(--slate-500)">.com.pk</span></span></a>
+      <div class="search">⌕ Search models: Latitude 7420, ThinkPad…</div>
+      <nav><a class="active" href="#">Laptops</a><a href="#">Mobiles</a><a href="#">Components</a><a href="#">Desktops</a><a href="#">Servers</a><a href="#">Tools</a></nav>
+      <div class="actions"><span class="btn ghost">Cities</span><span class="icon-btn">☼</span><span class="btn primary">For shops</span></div>
+    </header>
+    <div class="hero"><small>Verified physical shops in Karachi, Lahore and Islamabad.</small><h4>Every shop's price for one model, on a single screen.</h4></div>
+  </div>
+
+  <div class="frame dark">
+    <div class="frame-label"><span>Desktop · dark mode</span><span>Single-colour white mark (guidelines §11 option 2)</span></div>
+    <header class="hdr">
+      <a class="brand" href="#"><img src="../logo/resale-logo-mono-white.svg" width="36" height="36" alt=""><span class="wm" style="font-size:22px"><span style="color:#fff">resale</span><span style="color:var(--slate-400)">.com.pk</span></span></a>
+      <div class="search">⌕ Search models…</div>
+      <nav><a class="active" href="#">Laptops</a><a href="#">Mobiles</a><a href="#">Components</a><a href="#">Desktops</a><a href="#">Servers</a></nav>
+      <div class="actions"><span class="icon-btn">☾</span><span class="btn primary" style="background:var(--teal-600)">For shops</span></div>
+    </header>
+    <div class="hero"><h4>Every shop's price for one model, on a single screen.</h4></div>
+  </div>
+
+  <div class="frame dark">
+    <div class="frame-label"><span>Desktop · dark mode, alternative</span><span>Full-colour mark on a white chip (guidelines §11 option 1)</span></div>
+    <header class="hdr">
+      <a class="brand" href="#"><span class="chip"><img src="../logo/resale-logo-master.svg" width="32" height="32" alt=""></span><span class="wm" style="font-size:22px"><span style="color:#fff">resale</span><span style="color:var(--slate-400)">.com.pk</span></span></a>
+      <div class="search">⌕ Search models…</div>
+      <div class="actions"><span class="btn primary" style="background:var(--teal-600)">For shops</span></div>
+    </header>
+  </div>
+
+  <h3 style="margin-top:32px">Mobile (375px)</h3>
+  <div class="phones">
+    <div class="phone"><div class="bar"></div>
+      <header class="hdr"><a class="brand" href="#"><img src="../logo/resale-logo-flat.svg" width="28" height="28" alt=""><span class="wm" style="font-size:19px"><span style="color:var(--teal-800)">resale</span><span style="color:var(--slate-500)">.com.pk</span></span></a>
+      <div class="actions"><span class="icon-btn">⌕</span><span class="icon-btn">☰</span></div></header>
+      <div class="body note">Flat two-colour mark at 28px</div></div>
+    <div class="phone dark-p"><div class="bar"></div>
+      <header class="hdr"><a class="brand" href="#"><img src="../logo/resale-logo-mono-white.svg" width="28" height="28" alt=""><span class="wm" style="font-size:19px"><span style="color:#fff">resale</span><span style="color:var(--slate-400)">.com.pk</span></span></a>
+      <div class="actions"><span class="icon-btn">⌕</span><span class="icon-btn">☰</span></div></header>
+      <div class="body note" style="color:#94A3B8">Dark mode: white mark</div></div>
+    <div class="phone"><div class="bar"></div>
+      <header class="hdr"><a class="brand" href="#"><img src="../logo/resale-logo-flat.svg" width="28" height="28" alt=""><span class="wm" style="font-size:20px;color:var(--teal-800)">resale</span></a>
+      <div class="actions"><span class="icon-btn">⌕</span><span class="icon-btn">☰</span></div></header>
+      <div class="body note">Very narrow screens (&lt;340px) may drop ".com.pk"; it's optional</div></div>
+  </div>
+
+  <!-- ============ WORDMARK ============ -->
+  <h2>2. Wordmark colour options</h2>
+  <p class="lead">"resale" is the name people say; ".com.pk" tells them where to find it. The options differ in how much each half stands out. Each card shows light and dark backgrounds at header size.</p>
+
+  <div class="grid" id="wm-grid"></div>
+
+  <h3 style="margin-top:32px">Why A is recommended</h3>
+  <table>
+    <tr><th>Option</th><th>Contrast on white</th><th>Verdict</th></tr>
+    <tr><td><b>A</b> · Teal "resale" + slate ".com.pk"</td><td>9.5 : 1 / 4.8 : 1 (AA)</td><td>Teal ties the name to the mark and the primary button colour. Muted domain keeps "resale" as the thing people remember. Orange stays reserved for the mark and commercial accents (guidelines §3 colour hierarchy).</td></tr>
+    <tr><td><b>B</b> · All ink</td><td>17.9 : 1</td><td>Safest and most neutral; matches header text colour. Loses brand colour, so the name feels generic next to a colourful mark.</td></tr>
+    <tr><td><b>C</b> · Ink "resale" + teal ".com.pk"</td><td>17.9 : 1 / 5.1 : 1</td><td>Puts the colour on the least important part. Reads like a link.</td></tr>
+    <tr><td><b>D</b> · All teal</td><td>9.5 : 1</td><td>Strong and simple, but ".com.pk" gets the same weight as the name and the lockup feels heavy at small sizes.</td></tr>
+    <tr><td><b>E</b> · Orange dot accent</td><td>Dot ≈3 : 1 (fails as text)</td><td>Eye-catching, but adds a new brand device the guidelines don't define, and the dot vanishes on small screens. Use for campaigns only, if at all.</td></tr>
+    <tr><td><b>F</b> · Stacked (current site)</td><td>n/a</td><td>Compact, but ".com.pk" becomes tiny (≈11px) and hard to read; guidelines specify a single line.</td></tr>
+  </table>
+  <p class="note">The live site currently uses Hanken Grotesk 800 in a stacked lockup. The guidelines say Inter 600/700 and advise against 800/900. Option G shows the current font for comparison.</p>
+
+  <!-- ============ ASSETS ============ -->
+  <h2>3. Logo asset set</h2>
+  <p class="lead">All generated from the master by <code>tools/gen-assets.js</code>.</p>
+  <div class="assets">
+    <div class="asset"><div class="pic"><img src="../logo/resale-logo-master.svg" width="110" height="110" alt=""></div><div class="cap"><b>Master</b> · full gradient, 33px+<br><code>resale-logo-master.svg</code></div></div>
+    <div class="asset"><div class="pic"><img src="../logo/resale-logo-flat.svg" width="110" height="110" alt=""></div><div class="cap"><b>Flat two-colour</b> · 16–32px<br><code>resale-logo-flat.svg</code></div></div>
+    <div class="asset"><div class="pic"><img src="../logo/resale-logo-mono-ink.svg" width="110" height="110" alt=""></div><div class="cap"><b>Single colour, ink</b> · stamps, invoices, print<br><code>resale-logo-mono-ink.svg</code></div></div>
+    <div class="asset"><div class="pic"><img src="../logo/resale-logo-mono-teal.svg" width="110" height="110" alt=""></div><div class="cap"><b>Single colour, teal</b><br><code>resale-logo-mono-teal.svg</code></div></div>
+    <div class="asset"><div class="pic d"><img src="../logo/resale-logo-mono-white.svg" width="110" height="110" alt=""></div><div class="cap"><b>Reversed white</b> · dark backgrounds, photos<br><code>resale-logo-mono-white.svg</code></div></div>
+    <div class="asset"><div class="pic"><img src="../logo/app-icon/ios-app-icon-1024.png" width="110" height="110" style="border-radius:24px;box-shadow:0 2px 8px rgba(15,23,42,.12)" alt=""></div><div class="cap"><b>iOS app icon</b> · 1024 master, corners applied by iOS<br><code>app-icon/ios-app-icon-1024.png</code></div></div>
+    <div class="asset"><div class="pic"><span style="width:110px;height:110px;border-radius:50%;overflow:hidden;background:#fff;display:grid;place-items:center;box-shadow:0 2px 8px rgba(15,23,42,.12)"><img src="../logo/app-icon/android-adaptive-foreground-432.png" width="165" height="165" style="max-width:none" alt=""></span></div><div class="cap"><b>Android adaptive</b> · shown in circle mask<br><code>app-icon/android-adaptive-*</code></div></div>
+    <div class="asset"><div class="pic"><img src="../logo/favicon/icon-maskable-512.png" width="110" height="110" style="border-radius:50%" alt=""></div><div class="cap"><b>PWA maskable</b> · circle crop safe<br><code>favicon/icon-maskable-512.png</code></div></div>
+  </div>
+
+  <h3 style="margin-top:32px">Small-size test (actual pixels)</h3>
+  <div class="frame"><div class="sizes">
+    <figure><img src="../logo/favicon/favicon-16.png" width="16" height="16" alt="">16 flat</figure>
+    <figure><img src="../logo/resale-logo-master.svg" width="16" height="16" alt="">16 master ✗</figure>
+    <figure><img src="../logo/favicon/favicon-32.png" width="32" height="32" alt="">32 flat</figure>
+    <figure><img src="../logo/favicon/favicon-48.png" width="48" height="48" alt="">48 flat</figure>
+    <figure><img src="../logo/resale-logo-master.svg" width="28" height="28" alt="">28 master</figure>
+    <figure><img src="../logo/resale-logo-flat.svg" width="28" height="28" alt="">28 flat</figure>
+    <figure><img src="../logo/resale-logo-master.svg" width="36" height="36" alt="">36 master</figure>
+    <figure><img src="../logo/favicon/apple-touch-icon.png" width="60" height="60" style="border-radius:13px" alt="">touch icon</figure>
+  </div></div>
+  <p class="note">At 16px the four ribbons still read as the hexagon silhouette with teal/orange halves, which is what the guidelines ask of a favicon. If the team feels it is too busy, the fallback is a dedicated 16px pixel-fitted version, which should be hand-drawn by a designer.</p>
+</main>
+
+<script>
+  const T = { teal: '#024E53', teal6: '#027B7F', orange: '#FD7009', ink: '#0F172A', slate: '#64748B', s400: '#94A3B8', white: '#FFFFFF' };
+  const opts = [
+    { k: 'A', name: 'Teal name, muted domain', tag: ['rec', 'Recommended'],
+      light: [['resale', T.teal], ['.com.pk', T.slate]], dark: [['resale', T.white], ['.com.pk', T.s400]] },
+    { k: 'A2', name: 'Same as A, lighter domain weight (500)', tag: ['ok', 'Variant of A'], domainWeight: 500,
+      light: [['resale', T.teal], ['.com.pk', T.slate]], dark: [['resale', T.white], ['.com.pk', T.s400]] },
+    { k: 'B', name: 'All ink', tag: ['ok', 'Safe / neutral'],
+      light: [['resale.com.pk', T.ink]], dark: [['resale.com.pk', T.white]] },
+    { k: 'C', name: 'Ink name, teal domain', tag: ['ok', 'Alternative'],
+      light: [['resale', T.ink], ['.com.pk', T.teal6]], dark: [['resale', T.white], ['.com.pk', '#CCDCDD']] },
+    { k: 'D', name: 'All teal', tag: ['ok', 'Alternative'],
+      light: [['resale.com.pk', T.teal]], dark: [['resale.com.pk', '#CCDCDD']] },
+    { k: 'E', name: 'Orange dot accent', tag: ['warn', 'Campaigns only'],
+      light: [['resale', T.teal], ['.', T.orange], ['com.pk', T.slate]], dark: [['resale', T.white], ['.', T.orange], ['com.pk', T.s400]] },
+    { k: 'F', name: 'Stacked (like current site)', tag: ['warn', 'Not recommended'], stacked: true,
+      light: [['resale', T.ink], ['.com.pk', T.teal]], dark: [['resale', T.white], ['.com.pk', '#CCDCDD']] },
+    { k: 'G', name: 'Option A in Hanken Grotesk (current site font)', tag: ['ok', 'For comparison'], font: '"Hanken Grotesk"',
+      light: [['resale', T.teal], ['.com.pk', T.slate]], dark: [['resale', T.white], ['.com.pk', T.s400]] },
+  ];
+  const lockup = (o, parts, mark, size) => {
+    const font = o.font ? `font-family:${o.font};` : '';
+    const txt = o.stacked
+      ? `<span class="stacked wm" style="${font}"><span style="font-size:${size}px;color:${parts[0][1]}">${parts[0][0]}</span><span style="font-size:${Math.round(size * 0.5)}px;color:${parts[1][1]};font-weight:600">${parts[1][0]}</span></span>`
+      : `<span class="wm" style="font-size:${size}px;${font}">${parts.map(([t, c], i) => `<span style="color:${c};${o.domainWeight && i > 0 ? 'font-weight:' + o.domainWeight : ''}">${t}</span>`).join('')}</span>`;
+    return `<span class="brand"><img src="../logo/${mark}" width="${Math.round(size * 1.6)}" height="${Math.round(size * 1.6)}" alt="">${txt}</span>`;
+  };
+  const colours = parts => [...new Map(parts.map(p => [p[1], p[0]])).entries()]
+    .map(([c, t]) => `<span class="sw"><i style="background:${c}"></i>${c} ${t}</span>`).join('');
+  document.getElementById('wm-grid').innerHTML = opts.map(o => `
+    <div class="card">
+      <div class="stage">${lockup(o, o.light, 'resale-logo-master.svg', 24)}${lockup(o, o.light, 'resale-logo-flat.svg', 17)}</div>
+      <div class="stage d">${lockup(o, o.dark, 'resale-logo-mono-white.svg', 24)}</div>
+      <div class="meta"><b>${o.k} · ${o.name} <span class="tag ${o.tag[0]}">${o.tag[1]}</span></b><div class="swatches">${colours(o.light)}</div></div>
+    </div>`).join('');
+</script>
+</body>
+</html>
