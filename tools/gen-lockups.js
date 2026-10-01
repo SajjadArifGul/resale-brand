@@ -10,7 +10,11 @@ const LOGO = path.join(ROOT, 'logo');
 const OUT = path.join(LOGO, 'lockup');
 fs.mkdirSync(OUT, { recursive: true });
 
-const font = opentype.parse(fs.readFileSync(require.resolve('@fontsource/inter/files/inter-latin-700-normal.woff')).buffer);
+// Same Inter 700 file Google Fonts serves to browsers (v20), so outlines and metrics match the web lockup.
+const font = opentype.parse(fs.readFileSync(path.join(__dirname, 'fonts', 'Inter-700-googlefonts-v20.ttf')).buffer);
+// Pair kerning the browser applies via a GPOS lookup that opentype.js does not read (font units).
+// Measured from Chrome's rendering of the reference lockup in previews/brand-u6.html.
+const GPOS_KERN = { re: -50 };
 const upm = font.unitsPerEm;
 const ASC = font.tables.hhea.ascender / upm;
 const DESC = -font.tables.hhea.descender / upm;
@@ -22,7 +26,7 @@ const T = 0.14 * D;            // underline thickness and gap
 const CUT = 0.081 * D;         // 30° end cut (thickness × tan30)
 
 // Line-height:1 box for a run of text: where its top/bottom sit relative to the baseline.
-const boxTop = (base, size) => base - ASC * size + (1 - (ASC + DESC)) * size / 2;
+const boxTop = (base, size) => base - ASC * size - (1 - (ASC + DESC)) * size / 2;
 
 // Lay out glyphs left to right with kerning + tracking; returns path data and the advance.
 function run(text, x, base, size) {
@@ -32,7 +36,7 @@ function run(text, x, base, size) {
   glyphs.forEach((g, i) => {
     d += g.getPath(x, base, size).toPathData(2);
     x += g.advanceWidth * scale + TRACK;
-    if (i < glyphs.length - 1) x += font.getKerningValue(g, glyphs[i + 1]) * scale;
+    if (i < glyphs.length - 1) x += (font.getKerningValue(g, glyphs[i + 1]) + (GPOS_KERN[text[i] + text[i + 1]] || 0)) * scale;
   });
   return { d, end: x };
 }
@@ -52,7 +56,7 @@ function wordmark(x0, base, c) {
     `<path fill="${c.dom}" d="${dot.d}${com.d}"/>\n` +
     `<polygon fill="${c.line}" points="${f(uL + CUT)},${f(barTop)} ${f(uR)},${f(barTop)} ${f(uR - CUT)},${f(barBot)} ${f(uL)},${f(barBot)}"/>\n` +
     `<polygon fill="${c.fold}" points="${f(fx)},${f(fTop)} ${f(fx + fW)},${f(fTop)} ${f(fx + fW)},${f(fTop + fH * 0.62)} ${f(fx)},${f(fTop + fH)}"/>`;
-  return { svg, right: Math.max(uR, fx + fW), bottom: fTop + fH, top: boxTop(base, N) };
+  return { svg, right: Math.max(uR, fx + fW), textRight: uR, bottom: fTop + fH, top: boxTop(base, N) };
 }
 
 // Symbol artwork, re-used from the existing logo files.
@@ -87,7 +91,7 @@ function horizontal(c) {
 function stacked(c) {
   const S = 2.6 * N, gap = 0.5 * N;
   const probe = wordmark(0, 0, c); // measure width first
-  const wmW = probe.right, width = Math.max(S, wmW);
+  const wmW = probe.textRight, width = Math.max(S, probe.right); // centre on the text box, as CSS does
   const wmTop = S + gap, base = wmTop - boxTop(0, N);
   const wm = wordmark((width - wmW) / 2, base, c);
   return doc(symbol(c.mark, (width - S) / 2, 0, S) + '\n' + wm.svg, -PAD, -PAD, width + 2 * PAD, wm.bottom + 2 * PAD, 'resale.com.pk');
