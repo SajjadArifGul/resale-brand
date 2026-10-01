@@ -1,14 +1,16 @@
 # resale.com.pk Digital Brand and UI Guidelines
 
-**Version:** 1.0  
-**Status:** Approved logo and recommended digital implementation standard  
-**Applies to:** Website, responsive web, mobile apps, PWA, internal product interfaces, design systems, and marketing landing pages
+**Version:** 1.1 (1 October 2026)  
+**Status:** Approved logo, approved logo lockup (U6 "folded underline"), and recommended digital implementation standard  
+**Applies to:** Website, responsive web, mobile apps, PWA, internal product interfaces, design systems, marketing, print, and partner materials  
+**Visual reference:** `previews/brand-u6.html` shows every rule below applied in context.
 
 ## Instructions for AI agents
 
 Treat this file as the implementation source of truth for resale.com.pk digital brand and UI work.
 
-- Preserve the approved icon-only logo geometry. Do not redraw, rotate, mirror, stretch, rearrange, or recolor it.
+- Preserve the approved symbol geometry. Do not redraw, rotate, mirror, stretch, rearrange, or recolor it.
+- When the brand name appears with the symbol, use the approved **U6 lockup** (section 2.2) from `logo/lockup/`. Do not retype or restyle the brand name as a logo. The orange underline, its fold, and the smaller grey `.com.pk` are part of the approved design, not decoration to remove.
 - Use semantic design tokens instead of scattering raw values through product code.
 - Use teal for trust and primary interaction, orange for selective commercial emphasis, neutrals for content, and semantic colors for system meaning.
 - Meet WCAG AA at minimum. Do not rely on color alone to communicate state, status, selection, or action.
@@ -16,7 +18,7 @@ Treat this file as the implementation source of truth for resale.com.pk digital 
 - Do not invent logo variants, palette values, typefaces, claims, taglines, or brand language not defined here.
 - If an implementation requirement conflicts with accessibility, product clarity, or platform conventions, preserve accessibility and clarity and flag the deviation for review.
 - Color and gradient values in this file are **normalized digital palette values derived from the approved raster logo**. They are not claimed as original vector-source values.
-- A clean vector logo master, flat micro mark, favicon family, mobile app assets, and approved monochrome/reversed artwork remain production requirements.
+- Production logo files live in `logo/` (section 17). Use them as supplied; regenerate derived files with the scripts in `tools/` rather than editing exports by hand.
 
 ## 1. Brand direction
 
@@ -37,29 +39,49 @@ The interface must not look like an AI product, crypto product, gaming product, 
 
 ## 2. Official logo
 
-The approved logo is an **icon-only symbol** comprising four interconnected ribbon-like forms in Resale Teal and Resale Orange.
+The logo has two approved forms: the **symbol** on its own, and the **lockup** (symbol plus wordmark).
 
-When the brand name appears beside the symbol, write:
+### 2.1 Symbol
+
+The symbol comprises four interconnected ribbon-like forms in Resale Teal and Resale Orange, arranged as a pointy-top hexagon built from vertical sides and 30° diagonals. It can function independently (app icon, favicon, avatars). Do not insert the brand name into it.
+
+The SVG master `logo/resale-logo-master.svg` is traced 1:1 from the approved raster artwork and preserves its silhouette, internal negative spaces, ribbon overlaps, rounded corners, teal/orange relationship, proportions, and fold shading. All other symbol files are generated from it. Do not use the original AI-generated raster as a production source.
+
+### 2.2 Lockup (U6 "folded underline")
+
+When the brand name appears with the symbol, use the U6 lockup. The domain name is always written in full, lowercase:
 
 ```text
 resale.com.pk
 ```
 
-Use lowercase. Keep the symbol capable of functioning independently. Do not insert the brand name into the icon.
+"resale" leads; ".com.pk" is set smaller but must always be present, because the full address is what people type and resale.com / resale.pk are not owned by the brand. One orange stroke with a ribbon fold underlines "com.pk" and ties the name to the symbol.
 
-### Production requirement
+Construction (N = name size; every value scales with N):
 
-Convert the finalized raster artwork into a clean SVG master before broad production. Preserve:
+| Element | Rule |
+|---|---|
+| Name "resale" | Inter 700, letter-spacing −2% (−0.02 N), Teal 800 `#024E53`, size N |
+| Domain ".com.pk" | Inter 700 at 0.7 N, same letter-spacing, Slate 500 `#64748B`, on the name's baseline. The full stop is an ordinary full stop in the domain colour. |
+| Underline | Under "com.pk" only (not under the full stop). Thickness 0.14 × domain size (≈ 0.1 N), never below 2px. Gap between text box and stroke equals the thickness. Both ends cut at 30° from vertical (offset = thickness × tan 30°), matching the symbol's hexagon sides. Orange 600 `#FD7009`. |
+| Fold | A tab folding down beneath the stroke's right end, Orange 700 `#E55106`. Width 0.308 × domain size, depth 0.364 × domain size; its lower edge slopes up from left to right. |
+| Symbol | Height 1.55 N, vertically centred on the name, gap 0.42 N to the name. |
+| Stacked version | Symbol 2.6 N, centred above the wordmark, gap 0.5 N. |
+| Clear space | At least 0.25 × symbol height on every side. |
 
-- exact silhouette;
-- internal negative spaces;
-- ribbon overlaps;
-- rounded corners;
-- teal/orange relationship;
-- proportions;
-- visual depth.
+Versions:
 
-Do not use an AI-generated raster as the source for every favicon, mobile icon, and web size.
+| Version | Use | File |
+|---|---|---|
+| Horizontal, full colour | Default: headers, documents, most placements | `logo/lockup/resale-lockup.svg` |
+| Horizontal, small | When the symbol renders at 32px or less (flat symbol) | `logo/lockup/resale-lockup-small.svg` |
+| Horizontal, dark | Dark surfaces and dark mode: white symbol and name, Slate 400 `#94A3B8` domain, orange stroke and fold kept | `logo/lockup/resale-lockup-dark.svg` |
+| Horizontal, on teal | Teal 800 surfaces: as dark, with Teal Soft 2 `#CCDCDD` domain | `logo/lockup/resale-lockup-on-teal.svg` |
+| One colour, ink / white | Receipts, stamps, engraving, embroidery, reversed print. Stroke and fold take the same single colour. | `resale-lockup-ink.svg`, `resale-lockup-white.svg` |
+| Stacked | Square spaces: splash screens, stickers, posts | `resale-lockup-stacked*.svg` |
+| Wordmark only | When the symbol already appears nearby | `resale-wordmark*.svg` |
+
+Lockup files are outlined (no font dependency). Each has a 1200px transparent PNG beside it. In live web UI the lockup may be built in HTML/CSS only if it matches this construction exactly; the reference implementation is the `.wm` / `.lockup` CSS in `previews/brand-u6.html`. Otherwise use the SVG.
 
 ## 3. Core brand colors
 
@@ -119,6 +141,8 @@ Reserve gradients for the official full-color logo, large brand graphics, hero i
 | Orange | 10% | Commercial emphasis and selective accent |
 
 This ratio expresses hierarchy rather than a mathematical requirement.
+
+Within the logo, orange appears only in the symbol and in the lockup's underline (Orange 600) and fold (Orange 700). Do not add further orange to the wordmark.
 
 ## 4. Neutral and semantic colors
 
@@ -370,13 +394,7 @@ Do not shrink important marketplace information merely to fit more content on a 
 
 ### Brand name in headers
 
-Use this construction:
-
-```text
-[Logo] resale.com.pk
-```
-
-Use Inter, weight `700`, lowercase. Do not reproduce the name inside the symbol.
+Use the U6 lockup (section 2.2), not a typed brand name. The wordmark is always Inter 700 regardless of the interface font in use; do not redraw it in another typeface or weight. Do not reproduce the name inside the symbol.
 
 ## 10. Logo sizing and clear space
 
@@ -392,6 +410,16 @@ Maintain clear space on every side equal to approximately **12.5% of the logo wi
 | Marketing | As required by layout |
 
 Avoid the detailed logo below approximately `24px` in ordinary UI.
+
+### Lockup sizes
+
+| Use | Name size N | Symbol |
+|---|---:|---|
+| Desktop header | `22–24px` | `34–37px`, full gradient |
+| Desktop header, scrolled / compact | `18–19px` | `28–30px`, flat |
+| Mobile header and app bar | `18–20px` | `28–31px`, flat |
+| Footer and documents | `18–22px` | Flat or full gradient by size |
+| Minimum | `16px` (domain ≈ 11px) | Below this, use the symbol alone |
 
 ### Micro logo
 
@@ -439,8 +467,8 @@ Use the full-color logo on:
 
 Use these options in order:
 
-1. Place the full-color logo on a white or light container.
-2. Use an officially prepared monochrome white version.
+1. Use the approved dark lockup or white symbol (`resale-lockup-dark.svg`, `resale-logo-mono-white.svg`).
+2. Place the full-color logo on a white or light container.
 3. Use another specifically approved reversed version.
 
 Do not place the dark teal portions directly on similarly dark backgrounds. Do not recolor individual sections to force a fit.
@@ -464,6 +492,15 @@ Do not:
 - remove a structural section;
 - use the literal `器` character instead of the approved symbol;
 - repeat the logo as a page background pattern.
+
+For the lockup, also do not:
+
+- drop ".com.pk" or set it larger than "resale";
+- remove, move, or recolor the underline or fold, or underline "resale" instead;
+- add an orange or coloured full stop, or replace it with a shape;
+- retype the wordmark in another font, weight, or capitalization (for example "Resale.com.pk");
+- use the full-colour lockup on dark or orange backgrounds;
+- put the wordmark inside avatars or app icons (use the symbol alone).
 
 ## 12. Iconography, imagery, and effects
 
@@ -656,22 +693,18 @@ A standard offer card should apply the system as follows:
 
 ## 17. Asset package
 
-| Category | Required files |
-|---|---|
-| Master logo | Editable vector master; SVG; print-ready PDF/EPS where required |
-| Digital logo | Full-color SVG and PNG; flat two-color SVG and PNG; approved monochrome and reversed variants |
-| Favicon | Optimized 16, 32, and 48px assets plus `favicon.ico` |
-| Web app | Apple touch icon 180px; PWA icons 192 and 512px |
-| Mobile | iOS 1024px master; Android adaptive foreground and background assets |
-| Documentation | Color/token source, usage notes, version, and export date |
+| Category | Files | Status |
+|---|---|---|
+| Symbol master | `logo/resale-logo-master.svg` | Done (v1.1) |
+| Symbol variants | `logo/resale-logo-flat.svg`, `resale-logo-mono-ink.svg`, `resale-logo-mono-teal.svg`, `resale-logo-mono-white.svg` (+ 512px PNGs) | Done |
+| Lockup (U6) | `logo/lockup/`: horizontal, small, dark, on-teal, ink, white, stacked, wordmark-only; SVG (outlined) + 1200px PNG | Done |
+| Favicon | `logo/favicon/favicon.svg`, `favicon.ico` (16/32/48), `favicon-16/32/48.png` | Done |
+| Web app | `logo/favicon/apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `site.webmanifest` | Done |
+| Mobile | `logo/app-icon/ios-app-icon-1024.png/.svg`; `android-adaptive-foreground(-432).svg/png`, `android-adaptive-background-432.png` | Done |
+| Print | Print-ready PDF/EPS of the lockup in CMYK and Pantone references | Still required (printer to confirm) |
+| Generators | `tools/gen-assets.js`, `tools/trace-mono.js`, `tools/gen-lockups.js` | Re-run after any master change |
 
-Use filenames that identify brand, asset, variant, color mode, size, and version.
-
-```text
-resale-symbol-flat-color-32-v1.png
-```
-
-Do not label exploratory or AI-generated files as production masters.
+The original AI-generated raster is kept only as the approved reference image. Do not label exploratory files (`previews/brand-preview.html`) as production artwork.
 
 ## 18. Governance
 
@@ -687,6 +720,7 @@ Do not label exploratory or AI-generated files as production masters.
 Before considering brand/UI work complete, verify:
 
 - [ ] The approved logo asset and correct variant are used.
+- [ ] Where the brand name appears with the symbol, the U6 lockup is used unchanged (".com.pk" present, underline and fold intact, correct light/dark version).
 - [ ] Logo size and clear space meet this guide.
 - [ ] No ad-hoc logo treatment or brand color was introduced.
 - [ ] Components use semantic tokens rather than unexplained raw values.
@@ -711,3 +745,10 @@ Use teal for trust and primary interaction, orange for selective commercial emph
 ## Final design principle
 
 Build a marketplace that feels trustworthy, clear, and distinctly resale.com.pk. Let teal carry confidence, orange add controlled commercial energy, and the product information remain the hero.
+
+## Change log
+
+| Version | Date | Change |
+|---|---|---|
+| 1.1 | 1 October 2026 | Approved the U6 "folded underline" lockup (section 2.2) with sizes, versions, and misuse rules. Added the traced SVG symbol master and the full generated asset set (section 17). Updated agent instructions, dark-background order, header guidance, and checklist accordingly. |
+| 1.0 | 1 October 2026 | Initial guidelines and approved symbol. |
