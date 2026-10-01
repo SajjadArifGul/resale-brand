@@ -267,6 +267,21 @@
   <h3 style="margin-top:32px">The pairing in use: C1 on the site, C2 for stickers and campaigns</h3>
   <div id="sys-c"></div>
 
+  <!-- ============ UNDERLINE ============ -->
+  <h2>2h. Orange underline (from R5)</h2>
+  <p class="lead">R5 simplified: a normal full stop in the domain colour, with the orange underline as the only accent. The underline's ends are cut at 30° from vertical, matching the symbol's hexagon sides.</p>
+
+  <h3>Side by side at header size</h3>
+  <div class="frame"><div id="ul-strip" style="padding:24px;display:grid;gap:22px"></div></div>
+
+  <div class="grid" id="ul-grid"></div>
+
+  <h3 style="margin-top:32px">Size test: U1 and U2</h3>
+  <div class="frame"><div id="ul-sizes" style="padding:24px;display:grid;gap:24px"></div></div>
+
+  <h3 style="margin-top:32px">One system, everywhere: U1</h3>
+  <div id="sys-u"></div>
+
   <!-- ============ ASSETS ============ -->
   <h2>3. Logo asset set</h2>
   <p class="lead">All generated from the master by <code>tools/gen-assets.js</code>.</p>
@@ -277,7 +292,7 @@
     <div class="asset"><div class="pic"><img src="../logo/resale-logo-mono-teal.svg" width="110" height="110" alt=""></div><div class="cap"><b>Single colour, teal</b><br><code>resale-logo-mono-teal.svg</code></div></div>
     <div class="asset"><div class="pic d"><img src="../logo/resale-logo-mono-white.svg" width="110" height="110" alt=""></div><div class="cap"><b>Reversed white</b> · dark backgrounds, photos<br><code>resale-logo-mono-white.svg</code></div></div>
     <div class="asset"><div class="pic"><img src="../logo/app-icon/ios-app-icon-1024.png" width="110" height="110" style="border-radius:24px;box-shadow:0 2px 8px rgba(15,23,42,.12)" alt=""></div><div class="cap"><b>iOS app icon</b> · 1024 master, corners applied by iOS<br><code>app-icon/ios-app-icon-1024.png</code></div></div>
-    <div class="asset"><div class="pic"><span style="width:110px;height:110px;border-radius:50%;overflow:hidden;background:#fff;display:grid;place-items:center;box-shadow:0 2px 8px rgba(15,23,42,.12)"><img src="../logo/app-icon/android-adaptive-foreground-432.png" width="165" height="165" style="max-width:none" alt=""></span></div><div class="cap"><b>Android adaptive</b> · shown in circle mask<br><code>app-icon/android-adaptive-*</code></div></div>
+    <div class="asset"><div class="pic"><span style="width:110px;height:110px;border-radius:50%;overflow:hidden;background:#fff;display:grid;place-items:center;box-shadow:0 2px 8px rgba(15,23,42,.12)"><img src="../logo/app-icon/android-adaptive-foreground-432.png" width="165" height="165" style="max-width:none;margin:-27.5px" alt=""></span></div><div class="cap"><b>Android adaptive</b> · shown in circle mask<br><code>app-icon/android-adaptive-*</code></div></div>
     <div class="asset"><div class="pic"><img src="../logo/favicon/icon-maskable-512.png" width="110" height="110" style="border-radius:50%" alt=""></div><div class="cap"><b>PWA maskable</b> · circle crop safe<br><code>favicon/icon-maskable-512.png</code></div></div>
   </div>
 
@@ -688,6 +703,59 @@
       `</div>`;
   };
   document.getElementById('sys-c').innerHTML = pairing();
+
+  // ---------- Orange underline ----------
+  // Underline bar: thickness in em of the underlined text, ends cut at 30° from vertical
+  // (horizontal offset = thickness × tan30), never thinner than 2px.
+  const bar = ({ t = .14, gap = .14, color = T.orange, ends = 'cut', inset = '0', fold = false, behind = false }) => {
+    const cut = ends === 'cut' ? `clip-path:polygon(calc(${t}em * ${TAN30.toFixed(3)}) 0,100% 0,calc(100% - ${t}em * ${TAN30.toFixed(3)}) 100%,0 100%);` : '';
+    const pos = behind ? `bottom:.08em;height:.42em;z-index:-1;` : `bottom:-${gap + t}em;height:max(2px, ${t}em);`;
+    const foldEl = fold ? `<span aria-hidden="true" style="position:absolute;right:-.02em;bottom:-${gap + t * 2.6}em;width:${(t * 2.2).toFixed(2)}em;height:${(t * 2.6).toFixed(2)}em;background:#E55106;clip-path:polygon(0 0,100% 0,100% 62%,0 100%)"></span>` : '';
+    return `<span aria-hidden="true" style="position:absolute;left:${inset};right:${inset};${pos}background:${color};${cut}"></span>${foldEl}`;
+  };
+  // parts: what the bar sits under. 'com' = "com.pk", 'dotcom' = ".com.pk", 'all' = "resale.com.pk"
+  const ulWord = ({ ratio = .7, under = 'com', domC, domCd, barOpts = {}, stacked = false }) => (s, d, f) => {
+    const n = d ? T.white : T.teal;
+    const dc = d ? (domCd || T.s400) : (domC || T.slate);
+    const ds = Math.max(11, Math.round(s * ratio));
+    const ul = inner => `<span style="position:relative;display:inline-block;isolation:isolate">${inner}${bar(barOpts)}</span>`;
+    const dotSpan = `<span style="color:${dc}">.</span>`;
+    const comSpan = `<span style="color:${dc}">com.pk</span>`;
+    let domain;
+    if (under === 'dotcom') domain = `<span style="font-size:${ds}px">${ul(dotSpan + comSpan)}</span>`;
+    else if (under === 'all') domain = `<span style="font-size:${ds}px">${dotSpan}${comSpan}</span>`;
+    else domain = `<span style="font-size:${ds}px">${dotSpan}${ul(comSpan)}</span>`;
+    const name = `<span style="color:${n}">resale</span>`;
+    if (stacked) return `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;flex-direction:column;align-items:flex-end;line-height:1;${f}">${name}<span style="margin-top:.08em">${domain}</span></span>`;
+    const inner = `${name}${domain}`;
+    return under === 'all'
+      ? `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}"><span style="position:relative;display:inline-flex;align-items:baseline;isolation:isolate">${inner}${bar({ ...barOpts, t: (barOpts.t || .14) * .7 })}</span></span>`
+      : `<span class="wm" style="font-size:${s}px;position:relative;display:inline-flex;align-items:baseline;${f}">${inner}</span>`;
+  };
+  const UV = [
+    { k: 'U1', name: 'Underline under "com.pk"', tag: ['rec', 'Recommended'], note: 'R5 without the orange dot: plain grey full stop, one orange stroke. Clean and calm.', word: ulWord({}) },
+    { k: 'U2', name: 'Underline under ".com.pk"', tag: ['rec', 'Alternative'], note: 'The stroke starts at the dot, so the whole domain reads as one highlighted unit.', word: ulWord({ under: 'dotcom' }) },
+    { k: 'U3', name: 'Thin underline', note: 'Half the weight. More refined, but it thins to the 2px minimum below ~20px.', word: ulWord({ barOpts: { t: .08, gap: .16 } }) },
+    { k: 'U4', name: 'Full-size domain, underlined', note: '".com.pk" at the same size as "resale"; the underline alone separates the two parts.', word: ulWord({ ratio: 1, barOpts: { t: .1, gap: .12 } }) },
+    { k: 'U5', name: 'Teal domain, orange underline', note: 'Domain in teal instead of grey: more colourful, closer to a link.', word: ulWord({ domC: T.teal6, domCd: '#CCDCDD' }) },
+    { k: 'U6', name: 'Folded underline', tag: ['ok', 'Creative'], note: 'The stroke\'s right end folds under in deep orange, like the ribbons in the symbol.', word: ulWord({ barOpts: { fold: true, ends: 'cut' } }) },
+    { k: 'U7', name: 'Marker highlight', note: 'Soft orange highlight behind "com.pk" instead of under it, like a highlighter pen (Orange Soft 2 #FFE2CE).', word: ulWord({ barOpts: { behind: true, color: '#FFE2CE', ends: 'cut' } }) },
+    { k: 'U8', name: 'Underline the whole name', note: 'One stroke under "resale.com.pk". Bold, but competes with the name instead of supporting the domain.', word: ulWord({ under: 'all', barOpts: { gap: .1 } }) },
+    { k: 'U9', name: 'Square ends', note: 'Same as U1 with plain square ends, for comparison with the 30° cut.', word: ulWord({ barOpts: { ends: 'square' } }) },
+    { k: 'U10', name: 'Stacked, underlined domain', note: 'Domain right-aligned under "resale" with its underline. For narrow and square spaces.', word: ulWord({ ratio: .5, stacked: true, barOpts: { gap: .12 } }) },
+  ];
+  const ulCard = v => `
+    <div class="card">
+      <div class="stage" style="gap:26px;padding:30px 20px 34px">${hexLockup(v, 26)}${hexLockup(v, 19)}</div>
+      <div class="stage d" style="padding:30px 20px 34px">${hexLockup(v, 26, true)}</div>
+      <div class="meta"><b>${v.k} · ${v.name} ${v.tag ? `<span class="tag ${v.tag[0]}">${v.tag[1]}</span>` : ''}</b><span class="note">${v.note}</span></div>
+    </div>`;
+  document.getElementById('ul-grid').innerHTML = UV.map(ulCard).join('');
+  document.getElementById('ul-strip').innerHTML = [['R5', RV[4]], ['U1', UV[0]], ['U2', UV[1]], ['U6', UV[5]], ['C1', CV[0]]]
+    .map(([k, v]) => `<div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap"><span class="note" style="width:36px;font-weight:600">${k}</span><span style="min-width:300px">${hexLockup(v, 26)}</span><span style="background:var(--dark-surface);padding:12px 16px 16px;border-radius:10px">${hexLockup(v, 22, true)}</span></div>`).join('');
+  document.getElementById('ul-sizes').innerHTML = [40, 30, 24, 20, 16].map(s => `
+    <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap"><span class="note" style="width:44px">${s}px</span>${hexLockup(UV[0], s)}${hexLockup(UV[1], s)}</div>`).join('');
+  document.getElementById('sys-u').innerHTML = system(UV[0]);
 </script>
 </body>
 </html>
