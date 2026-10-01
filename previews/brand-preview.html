@@ -200,6 +200,18 @@
   <h3 style="margin-top:32px">Other places</h3>
   <div class="grid" id="dot-contexts"></div>
 
+  <!-- ============ SMALLER DOMAIN ============ -->
+  <h2>2c. Smaller ".com.pk"</h2>
+  <p class="lead">"resale" leads; ".com.pk" stays visible because the full address is what people type (we don't own resale.com or resale.pk). All of these keep the E3 orange dot as the hinge between the two parts. Rule for every variant: ".com.pk" never renders below 11px.</p>
+
+  <div class="grid" id="small-grid"></div>
+
+  <h3 style="margin-top:32px">Size test: S1 vs S4</h3>
+  <div class="frame"><div id="small-sizes" style="padding:24px;display:grid;gap:20px"></div></div>
+
+  <h3 style="margin-top:32px">In the header</h3>
+  <div id="small-headers"></div>
+
   <!-- ============ ASSETS ============ -->
   <h2>3. Logo asset set</h2>
   <p class="lead">All generated from the master by <code>tools/gen-assets.js</code>.</p>
@@ -333,6 +345,83 @@
     ctx('Single colour print (dot must go ink too)', `<span class="brand"><img src="../logo/resale-logo-mono-ink.svg" width="38" height="38" alt="">${dotWord({ ...E3, name1: T.ink, dom: T.ink, dc: T.ink }, 24)}</span>`),
     ctx('Browser tab title', `<span class="tab" style="border:1px solid var(--slate-200)"><img src="../logo/favicon/favicon.svg" alt="">resale.com.pk: Compare verified tech shops</span>`, '#DEE1E6'),
   ].join('');
+
+  // ---------- Smaller domain ----------
+  // Each variant renders "resale" at `size`; the domain is scaled and positioned per layout.
+  const ORANGE = T.orange;
+  const roundDot = (c, em = .21) => `<span aria-hidden="true" style="display:inline-block;width:${em}em;height:${em}em;margin:0 .05em 0 .05em;background:${c};border-radius:50%"></span><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">.</span>`;
+  const S = [
+    { k: 'S1', name: 'Inline, domain 65%, baseline', tag: ['rec', 'Recommended'], ratio: .65, layout: 'inline',
+      note: 'Still reads as one address. Dot stays full size, so it bridges the two sizes.' },
+    { k: 'S2', name: 'Inline, domain 55%, lighter weight', ratio: .55, layout: 'inline', domW: 600,
+      note: 'Quieter. Hits the 11px floor at a 20px name, so not for small mobile headers.' },
+    { k: 'S3', name: 'Inline, domain 60%, tracked out', ratio: .6, layout: 'inline', track: '.06em', domW: 600,
+      note: 'Letter-spacing keeps the small text open and gives it a "label" feel.' },
+    { k: 'S4', name: 'Domain tag (pill)', tag: ['ok', 'Creative'], ratio: .52, layout: 'pill',
+      note: 'Treats ".com.pk" like a badge on the name. Distinctive; reads as part of the logo.' },
+    { k: 'S5', name: 'Stacked, domain right-aligned under', ratio: .42, layout: 'stack',
+      note: 'Compact width. Domain becomes a caption; weakest as a typed address.' },
+    { k: 'S6', name: 'Stacked, dot leads the domain', ratio: .42, layout: 'stack-dot', tag: ['ok', 'Creative'],
+      note: 'Orange dot starts the second line, so the dot still connects the two words.' },
+    { k: 'S7', name: 'Inline, domain raised to x-height', ratio: .5, layout: 'raised', tag: ['warn', 'Risky'],
+      note: 'Looks like a trademark/superscript; can read as a footnote rather than the address.' },
+    { k: 'S8', name: 'Domain in teal, 65%', ratio: .65, layout: 'inline', domC: T.teal6, domCd: '#CCDCDD',
+      note: 'Colour instead of grey for the domain; closer to a link look.' },
+  ];
+  const smallWord = (v, size, dark) => {
+    const n = dark ? T.white : (v.nameC || T.teal);
+    const d = dark ? (v.domCd || T.s400) : (v.domC || T.slate);
+    const ds = Math.max(11, Math.round(size * v.ratio));
+    const dom = (t = 'com.pk') => `<span style="font-size:${ds}px;color:${d};font-weight:${v.domW || 700};letter-spacing:${v.track || '-.01em'}">${t}</span>`;
+    const name = `<span style="color:${n}">resale</span>`;
+    const wrap = inner => `<span class="wm" style="font-size:${size}px;position:relative;display:inline-flex;align-items:baseline">${inner}</span>`;
+    switch (v.layout) {
+      case 'inline': return wrap(name + roundDot(ORANGE) + dom());
+      case 'raised': return `<span class="wm" style="font-size:${size}px;position:relative">${name}${roundDot(ORANGE)}<span style="vertical-align:${Math.round(size * .32)}px">${dom()}</span></span>`;
+      case 'pill': {
+        const bg = dark ? 'rgba(255,255,255,.10)' : 'var(--teal-soft)';
+        const fg = dark ? '#E2E8F0' : T.teal;
+        return `<span class="wm" style="font-size:${size}px;position:relative;display:inline-flex;align-items:center;gap:${Math.round(size * .22)}px">${name}<span style="display:inline-flex;align-items:center;gap:${Math.round(ds * .2)}px;font-size:${ds}px;padding:${Math.round(ds * .28)}px ${Math.round(ds * .55)}px;border-radius:999px;background:${bg};color:${fg};font-weight:600;letter-spacing:0">${roundDot(ORANGE, .42)}com.pk</span></span>`;
+      }
+      case 'stack': return `<span class="wm" style="font-size:${size}px;position:relative;display:inline-flex;flex-direction:column;align-items:flex-end;line-height:.95">${name}<span style="display:inline-flex;align-items:baseline;margin-top:.12em">${roundDot(ORANGE, .21 / v.ratio * .5)}${dom()}</span></span>`;
+      case 'stack-dot': return `<span class="wm" style="font-size:${size}px;position:relative;display:inline-flex;flex-direction:column;align-items:flex-start;line-height:.95">${name}<span style="display:inline-flex;align-items:center;gap:.12em;margin-top:.14em;padding-left:.04em">${roundDot(ORANGE, .26)}${dom()}</span></span>`;
+    }
+  };
+  const smallLockup = (v, size, mark, dark) =>
+    `<span class="brand" style="align-items:center"><img src="../logo/${mark}" width="${Math.round(size * 1.6)}" height="${Math.round(size * 1.6)}" alt="">${smallWord(v, size, dark)}</span>`;
+
+  document.getElementById('small-grid').innerHTML = S.map(v => `
+    <div class="card">
+      <div class="stage">${smallLockup(v, 26, 'resale-logo-master.svg')}${smallLockup(v, 19, 'resale-logo-flat.svg')}</div>
+      <div class="stage d">${smallLockup(v, 26, 'resale-logo-mono-white.svg', true)}</div>
+      <div class="meta"><b>${v.k} · ${v.name} ${v.tag ? `<span class="tag ${v.tag[0]}">${v.tag[1]}</span>` : ''}</b><span class="note">${v.note}</span></div>
+    </div>`).join('');
+
+  document.getElementById('small-sizes').innerHTML = [44, 32, 24, 19, 16].map(s => `
+    <div style="display:flex;gap:40px;align-items:center;flex-wrap:wrap">
+      <span class="note" style="width:44px">${s}px</span>
+      ${smallLockup(S[0], s, s * 1.6 > 32 ? 'resale-logo-master.svg' : 'resale-logo-flat.svg')}
+      ${smallLockup(S[3], s, s * 1.6 > 32 ? 'resale-logo-master.svg' : 'resale-logo-flat.svg')}
+    </div>`).join('');
+
+  const smallHdr = (v, dark) => `
+    <div class="frame${dark ? ' dark' : ''}">
+      <div class="frame-label"><span>Desktop · ${dark ? 'dark' : 'light'} · ${v.k}</span></div>
+      <header class="hdr">
+        <a class="brand" href="#" style="align-items:center"><img src="../logo/${dark ? 'resale-logo-mono-white.svg' : 'resale-logo-master.svg'}" width="36" height="36" alt="">${smallWord(v, 26, dark)}</a>
+        <div class="search">⌕ Search models: Latitude 7420, ThinkPad…</div>
+        <nav><a class="active" href="#">Laptops</a><a href="#">Mobiles</a><a href="#">Components</a><a href="#">Desktops</a><a href="#">Servers</a><a href="#">Tools</a></nav>
+        <div class="actions"><span class="btn ghost">Cities</span><span class="btn primary"${dark ? ' style="background:var(--teal-600)"' : ''}>For shops</span></div>
+      </header>
+    </div>`;
+  const smallPhone = (v, dark) => `
+    <div class="phone${dark ? ' dark-p' : ''}"><div class="bar"></div>
+      <header class="hdr"><a class="brand" href="#" style="align-items:center"><img src="../logo/${dark ? 'resale-logo-mono-white.svg' : 'resale-logo-flat.svg'}" width="30" height="30" alt="">${smallWord(v, 22, dark)}</a>
+      <div class="actions"><span class="icon-btn">⌕</span><span class="icon-btn">☰</span></div></header>
+      <div class="body note">${v.k} · name 22px</div></div>`;
+  document.getElementById('small-headers').innerHTML =
+    smallHdr(S[0]) + smallHdr(S[3]) + smallHdr(S[0], true) + smallHdr(S[5]) +
+    `<div class="phones" style="margin-top:16px">${smallPhone(S[0])}${smallPhone(S[3])}${smallPhone(S[5])}${smallPhone(S[0], true)}</div>`;
 </script>
 </body>
 </html>
