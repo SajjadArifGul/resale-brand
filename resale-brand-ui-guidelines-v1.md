@@ -1,6 +1,6 @@
 # resale.com.pk Digital Brand and UI Guidelines
 
-**Version:** 1.1 (1 October 2026)  
+**Version:** 1.2 (3 October 2026)  
 **Status:** Approved logo, approved logo lockup (U6 "folded underline"), and recommended digital implementation standard  
 **Applies to:** Website, responsive web, mobile apps, PWA, internal product interfaces, design systems, marketing, print, and partner materials  
 **Visual reference:** `previews/brand-u6.html` shows every rule below applied in context.
@@ -74,14 +74,30 @@ Versions:
 | Version | Use | File |
 |---|---|---|
 | Horizontal, full colour | Default: headers, documents, most placements | `logo/lockup/resale-lockup.svg` |
-| Horizontal, small | When the symbol renders at 32px or less (flat symbol) | `logo/lockup/resale-lockup-small.svg` |
+| Header (pixel-fitted) | Website headers and mobile app bars, 28–44px tall. Small-size optical version: see below. | `logo/lockup/resale-lockup-header-{28,32,36,40,44}(-dark).svg` + 1×/2×/3× PNG |
+| Horizontal, flat symbol | Optional, only where gradients cannot be reproduced (e.g. some print methods) | `logo/lockup/resale-lockup-small.svg` |
 | Horizontal, dark | Dark surfaces and dark mode: white symbol and name, Slate 400 `#94A3B8` domain, orange stroke and fold kept | `logo/lockup/resale-lockup-dark.svg` |
 | Horizontal, on teal | Teal 800 surfaces: as dark, with Teal Soft 2 `#CCDCDD` domain | `logo/lockup/resale-lockup-on-teal.svg` |
 | One colour, ink / white | Receipts, stamps, engraving, embroidery, reversed print. Stroke and fold take the same single colour. | `resale-lockup-ink.svg`, `resale-lockup-white.svg` |
 | Stacked | Square spaces: splash screens, stickers, posts | `resale-lockup-stacked*.svg` |
 | Wordmark only | When the symbol already appears nearby | `resale-wordmark*.svg` |
 
-Lockup files are outlined (no font dependency). Each has a 1200px transparent PNG beside it. In live web UI the lockup may be built in HTML/CSS only if it matches this construction exactly; the reference implementation is the `.wm` / `.lockup` CSS in `previews/brand-u6.html`. Otherwise use the SVG.
+Lockup files are outlined (no font dependency). Each has a 1200px transparent PNG beside it (header files have exact 1×/2×/3× PNGs instead).
+
+The lockup always uses the **detailed full-gradient symbol**, at every size and on every device, including mobile headers. The flat symbol is only for the standalone symbol at favicon sizes (section 10).
+
+#### Header lockup (small optical size)
+
+At header sizes the master proportions look cramped and the thin stroke falls between pixel rows. The header files are drawn for 28–44px height and differ from the master only in these optical adjustments:
+
+| Element | Master | Header version |
+|---|---|---|
+| Name letter-spacing | −2% | −0.5% |
+| ".com.pk" | Inter 700 at 0.7 N, −2% | Inter **600** at **0.72 N**, **+1.2%** letter-spacing |
+| Symbol gap | 0.42 N | 0.45 N |
+| Baseline, stroke, fold | Proportional | Snapped to whole pixels; stroke never under 2px |
+
+Use a header file at its exact size: set the `<img>` height to the number in the filename (e.g. `height="36"`) and let the width follow. Do not scale it with CSS transforms, do not use fractional sizes, and do not set `shape-rendering="crispEdges"`. Native apps use the @2x/@3x PNGs at the matching point size. In live web UI the lockup may be built in HTML/CSS only if it matches this construction exactly; the reference implementation is the `.wm` / `.lockup` CSS in `previews/brand-u6.html`. Otherwise use the SVG.
 
 ## 3. Core brand colors
 
@@ -415,10 +431,10 @@ Avoid the detailed logo below approximately `24px` in ordinary UI.
 
 | Use | Name size N | Symbol |
 |---|---:|---|
-| Desktop header | `22–24px` | `34–37px`, full gradient |
-| Desktop header, scrolled / compact | `18–19px` | `28–30px`, flat |
-| Mobile header and app bar | `18–20px` | `28–31px`, flat |
-| Footer and documents | `18–22px` | Flat or full gradient by size |
+| Desktop header | `22–24px` | `36–40px`: `resale-lockup-header-36` or `-40` |
+| Desktop header, scrolled / compact | `18–21px` | `28–32px`: `resale-lockup-header-28` or `-32` |
+| Mobile header and app bar | `18–21px` | `28–32px`: `resale-lockup-header-28` or `-32` |
+| Footer and documents | `18–22px` | Header file of matching size, or the master lockup |
 | Minimum | `16px` (domain ≈ 11px) | Below this, use the symbol alone |
 
 ### Micro logo
@@ -426,7 +442,7 @@ Avoid the detailed logo below approximately `24px` in ordinary UI.
 | Rendered size | Artwork |
 |---|---|
 | `33px` and above | Full gradient version |
-| `16–32px` | Flat two-color mark using `#024E53` and `#FD7009`; no shadows or micro-gradients |
+| `16–32px` | Flat two-color mark using `#024E53` and `#FD7009`; no shadows or micro-gradients. Applies to the **standalone symbol** (favicons, tiny UI icons) only; the lockup keeps the full-gradient symbol at all sizes. |
 | `16px` test failure | Dedicated simplified favicon preserving the overall silhouette |
 
 ### Required favicon assets
@@ -750,5 +766,6 @@ Build a marketplace that feels trustworthy, clear, and distinctly resale.com.pk.
 
 | Version | Date | Change |
 |---|---|---|
+| 1.2 | 3 October 2026 | Added pixel-fitted header lockups (28–44px, light and dark, 1×/2×/3× PNG) with small-size optical adjustments so the wordmark stays clear in headers. The lockup now uses the detailed full-gradient symbol at every size, including mobile. |
 | 1.1 | 1 October 2026 | Approved the U6 "folded underline" lockup (section 2.2) with sizes, versions, and misuse rules. Added the traced SVG symbol master and the full generated asset set (section 17). Updated agent instructions, dark-background order, header guidance, and checklist accordingly. |
 | 1.0 | 1 October 2026 | Initial guidelines and approved symbol. |

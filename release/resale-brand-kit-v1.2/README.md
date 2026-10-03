@@ -1,4 +1,4 @@
-# resale.com.pk brand kit v1.1
+# resale.com.pk brand kit v1.2
 
 Read `resale-brand-ui-guidelines-v1.pdf` first. Visual reference: https://sajjadarifgul.github.io/resale-brand/
 
@@ -6,8 +6,8 @@ Read `resale-brand-ui-guidelines-v1.pdf` first. Visual reference: https://sajjad
 
 | Need | File |
 |---|---|
-| Website header (light) | `logo/lockup/resale-lockup.svg` |
-| Header when symbol is 32px or smaller | `logo/lockup/resale-lockup-small.svg` |
+| **Website header / mobile app bar** | `logo/lockup/resale-lockup-header-{28,32,36,40,44}.svg` (+ `-dark`). Use at the exact height in the filename. Native apps: the @2x/@3x PNGs. |
+| Lockup anywhere else (light) | `logo/lockup/resale-lockup.svg` |
 | Dark mode / dark backgrounds | `logo/lockup/resale-lockup-dark.svg` |
 | On teal backgrounds | `logo/lockup/resale-lockup-on-teal.svg` |
 | One-colour print (receipts, stamps) | `logo/lockup/resale-lockup-ink.svg` / `-white.svg` |
@@ -27,4 +27,6 @@ Every SVG has a PNG beside it for tools that can't use SVG. Lockup files are out
 - Always keep ".com.pk", its orange underline and fold. Don't retype or recolour the logo.
 - Use the dark version on dark backgrounds, never full colour.
 - Name size minimum 16px; below that use the symbol alone.
+- Header files: set height to the filename number in whole px; no CSS scaling, no `shape-rendering: crispEdges`.
+- The lockup always uses the detailed gradient symbol, on desktop and mobile.
 - Avatars and app icons: symbol only.

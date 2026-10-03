@@ -212,14 +212,14 @@
   <!-- ================= SIZES ================= -->
   <section id="size">
     <h2>Sizes</h2>
-    <p class="lead">Name size N shown on the left. The full-gradient symbol is used above 32px; the flat two-colour symbol at 32px and below (guidelines §10).</p>
+    <p class="lead">Name size N shown on the left. The lockup always uses the detailed full-gradient symbol. For headers and app bars, use the pixel-fitted header files (guidelines §2.2).</p>
     <div class="frame"><div id="size-ramp" style="padding:28px 24px;display:grid;gap:26px"></div></div>
     <div class="scroll-x" style="margin-top:16px">
       <table>
         <tr><th>Use</th><th>Name size N</th><th>Symbol</th></tr>
-        <tr><td>Desktop header</td><td>22–24px</td><td>34–37px, full gradient</td></tr>
-        <tr><td>Desktop header, scrolled</td><td>18–19px</td><td>28–30px, flat</td></tr>
-        <tr><td>Mobile header</td><td>18–20px</td><td>28–31px, flat</td></tr>
+        <tr><td>Desktop header</td><td>22–24px</td><td><code>resale-lockup-header-36</code> / <code>-40</code></td></tr>
+        <tr><td>Desktop header, scrolled</td><td>18–21px</td><td><code>resale-lockup-header-28</code> / <code>-32</code></td></tr>
+        <tr><td>Mobile header &amp; app bar</td><td>18–21px</td><td><code>resale-lockup-header-28</code> / <code>-32</code></td></tr>
         <tr><td>Footer, documents</td><td>18–22px</td><td>flat or full</td></tr>
         <tr><td><b>Minimum</b></td><td><b>16px</b> (domain ≈ 11px)</td><td>Below this, use the symbol alone</td></tr>
       </table>
@@ -282,11 +282,12 @@
 </main>
 
 <script>
+  const headerImg = (h, theme = '') => `<img src="../logo/lockup/resale-lockup-header-${h}${theme === 't-dark' ? '-dark' : ''}.svg" height="${h}" alt="resale.com.pk" style="display:block;height:${h}px;width:auto">`;
   const MARK = { full: '../logo/resale-logo-master.svg', flat: '../logo/resale-logo-flat.svg', white: '../logo/resale-logo-mono-white.svg', ink: '../logo/resale-logo-mono-ink.svg' };
 
   // Wordmark and lockups. `n` = name size in px; theme: '' | 't-dark' | 't-teal' | 't-ink' | 't-white'
   const wm = (theme = '') => `<span class="wm ${theme}" aria-label="resale.com.pk"><span class="n">resale</span><span class="d">.<span class="u">com.pk</span></span></span>`;
-  const markFor = (theme, symbolPx) => theme === 't-dark' || theme === 't-teal' || theme === 't-white' ? MARK.white : theme === 't-ink' ? MARK.ink : symbolPx > 32 ? MARK.full : MARK.flat;
+  const markFor = (theme, symbolPx) => theme === 't-dark' || theme === 't-teal' || theme === 't-white' ? MARK.white : theme === 't-ink' ? MARK.ink : MARK.full; // detailed symbol at every size
   const lockup = (n, theme = '', layout = 'h') => {
     if (layout === 'wm') return `<span style="font-size:${n}px">${wm(theme)}</span>`;
     if (layout === 'sym') return `<img src="${markFor(theme, n * 2.6)}" width="${n * 2.6}" height="${n * 2.6}" alt="resale.com.pk">`;
@@ -339,7 +340,7 @@
   })();
 
   // ---- Size ramp
-  $('size-ramp').innerHTML = [48, 36, 24, 20, 18, 16].map(n => `<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap"><span class="note" style="width:52px">N ${n}px</span>${lockup(n)}<span class="note">${n * 1.55 > 32 ? 'full symbol' : 'flat symbol'} · domain ${Math.round(n * .7)}px</span></div>`).join('') +
+  $('size-ramp').innerHTML = [48, 36, 24, 20, 18, 16].map(n => `<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap"><span class="note" style="width:52px">N ${n}px</span>${lockup(n)}<span class="note">full symbol · domain ${Math.round(n * .7)}px</span></div>`).join('') +
     `<div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap"><span class="note" style="width:52px">&lt; 16px</span><img src="${MARK.flat}" width="24" height="24" alt=""><span class="note">symbol only</span></div>`;
 
   // ---- Backgrounds
@@ -356,15 +357,16 @@
 
   // ---- Website
   (() => {
+    // Headers use the pixel-fitted header files at their exact size, as the guidelines require.
     const nav = `<nav><a class="on" href="#">Laptops</a><a href="#">Mobiles</a><a href="#">Components</a><a href="#">Desktops</a><a href="#">Servers</a><a href="#">Tools</a></nav>`;
-    const header = (theme, n = 24) => `<header class="hdr"><a class="lockup ${theme}" style="font-size:${n}px" href="#"><img src="${markFor(theme, n * 1.55)}" alt="">${wm(theme)}</a><div class="search">⌕ Search models: Latitude 7420, ThinkPad T14…</div>${nav}<div class="act"><span class="btn g">Cities</span><span class="ib">${theme ? '☾' : '☼'}</span><span class="btn p">For shops</span></div></header>`;
+    const header = (theme, n = 24) => `<header class="hdr"><a href="#" style="display:flex">${headerImg(n === 24 ? 36 : 28, theme)}</a><div class="search">⌕ Search models: Latitude 7420, ThinkPad T14…</div>${nav}<div class="act"><span class="btn g">Cities</span><span class="ib">${theme ? '☾' : '☼'}</span><span class="btn p">For shops</span></div></header>`;
     const heroBlock = `<div class="page-hero"><small>Verified physical shops in Karachi, Lahore and Islamabad.</small><div class="h">Every shop's price for one model, on a single screen.</div><div class="sbox"><span>Latitude 7420, ThinkPad T14, iPhone 13…</span><span class="btn p">Search</span></div></div>`;
     const tabs = `<div class="chrome"><span class="tab"><img src="../logo/favicon/favicon.svg" alt="">resale.com.pk: Compare verified tech shops</span><span class="tab off">New tab</span></div><div class="addr"><span>🔒 resale.com.pk</span></div>`;
     const footer = `<footer class="footer"><div class="cols"><div>${lockup(22, 't-dark')}<span style="max-width:280px;line-height:22px;margin-top:6px">Compare verified tech shops across Pakistan.</span></div><div><b>Browse</b><span>Laptops</span><span>Mobiles</span><span>Components</span></div><div><b>Tools</b><span>PTA Tax Calculator</span><span>IMEI Verification</span><span>Fair Price Estimator</span></div><div><b>Company</b><span>For shops</span><span>About</span><span>Contact</span></div></div><div class="legal">© 2026 resale.com.pk</div></footer>`;
     $('web-frames').innerHTML =
-      `<div class="frame"><div class="frame-label"><span>Desktop · light</span><span>N 24px · full-gradient symbol</span></div>${tabs}${header('')}${heroBlock}</div>` +
+      `<div class="frame"><div class="frame-label"><span>Desktop · light</span><span>resale-lockup-header-36.svg</span></div>${tabs}${header('')}${heroBlock}</div>` +
       `<div class="frame dk"><div class="frame-label"><span>Desktop · dark mode</span><span>White symbol · white name · orange stroke</span></div>${header('t-dark')}${heroBlock}</div>` +
-      `<div class="frame compact"><div class="frame-label"><span>Desktop · scrolled (compact sticky header)</span><span>N 19px · flat symbol</span></div>${header('', 19)}<div style="height:90px;background:var(--slate-50)"></div></div>` +
+      `<div class="frame compact"><div class="frame-label"><span>Desktop · scrolled (compact sticky header)</span><span>resale-lockup-header-28.svg</span></div>${header('', 19)}<div style="height:90px;background:var(--slate-50)"></div></div>` +
       `<div class="frame"><div class="frame-label"><span>Footer</span></div>${footer}</div>` +
       `<h3>Link preview (WhatsApp, Facebook, LinkedIn: 1200×630 Open Graph image)</h3>
        <div class="grid g2">
@@ -388,7 +390,7 @@
   // ---- Devices
   (() => {
     const sbar = (c = '') => `<div class="sbar" style="${c}"><span>9:41</span><span>●●● ▮</span></div>`;
-    const appHeader = theme => `<header class="hdr"><span class="lockup ${theme}" style="font-size:19px"><img src="${markFor(theme, 29)}" alt="">${wm(theme)}</span><span class="act"><span class="ib">⌕</span><span class="ib">☰</span></span></header>`;
+    const appHeader = theme => `<header class="hdr">${headerImg(32, theme)}<span class="act"><span class="ib">⌕</span><span class="ib">☰</span></span></header>`;
     const skel = '<div class="skel"></div>'.repeat(5);
     $('devices').innerHTML =
       `<div><div class="phone"><div class="screen homescreen">${sbar('color:#fff')}
